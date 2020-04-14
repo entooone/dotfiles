@@ -1,0 +1,50 @@
+clear lock
+clear control
+clear mod1
+clear mod2
+clear mod3
+clear mod4
+
+keycode 37  = Control_L Control_L Control_L Control_L
+keycode 66  = Control_L Control_L Control_L Control_L
+keycode 64  = Super_L Super_L Super_L Super_L
+keycode 101 = Alt_L Alt_L Alt_L Alt_L
+keycode 133 = Meta_L Meta_L Meta_L Meta_L
+keycode 108 = Hyper_R Hyper_R Hyper_R Hyper_R
+
+add control = Control_L Control_R
+add mod1    = Alt_L Alt_R
+add mod2    = Meta_L Meta_R
+add mod3    = Hyper_L Hyper_R
+add mod4    = Super_L Super_R
+
+pointer = 1 2 3 5 4 7 6 8 9 10 11 12
+
+keycode  35 = bracketleft braceleft bracketleft braceleft
+keycode  24 = q Q 1 exclam
+keycode  25 = w W 2 quotedbl
+keycode  26 = e E 3 numbersign
+keycode  27 = r R 4 dollar
+keycode  28 = t T 5 percent
+keycode  29 = y Y 6 ampersand
+keycode  30 = u U 7 apostrophe
+keycode  31 = i I 8 parenleft
+keycode  32 = o O 9 parenright
+keycode  33 = p P 0 asciitilde
+keycode  38 = a A a A
+keycode  39 = s S s S
+keycode  40 = d D d D
+keycode  41 = f F f F
+keycode  42 = g G g G
+keycode  43 = h H h H
+keycode  44 = j J j J
+keycode  45 = k K k K
+keycode  46 = l L l L
+keycode  52 = z Z z Z
+keycode  53 = x X x X
+keycode  54 = c C c C
+keycode  55 = v V v V
+keycode  56 = b B b B
+keycode  57 = n N n N
+keycode  58 = m M m M
+

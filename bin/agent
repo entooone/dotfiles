@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ $1 == "start" ]; then
+    if [ -z "$SSH_AGENT_PID" ]; then
+        exec ssh-agent $SHELL
+    else
+        echo "already started"
+    fi
+    exit 0
+fi
+
+if [ -n "$SSH_AGENT_PID" ]; then
+    if [ $1 == "kill" ]; then
+        ssh-add -D
+    elif [ $1 == "list" ]; then
+        ssh-add -l
+    else
+        ssh-add $1
+    fi
+else
+    echo "Run 'agent start'"
+fi
+

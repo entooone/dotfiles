@@ -1,0 +1,102 @@
+Xft.dpi:       150
+Xft.antialias: true
+Xft.hinting:   true
+Xft.rgba:      rgb
+Xft.autohint:  false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+XTerm*background:        #222D31
+XTerm*foreground:        #d8d8d8
+XTerm*pointerColor:      #1ABB9B
+XTerm*faceName:          Fixed
+XTerm*faceSize:          11
+XTerm*reverseVideo:      on
+XTerm*selectToClipboard: true
+
+*fading:                 8
+*fadeColor:              black
+*pointerColorBackground: #2B2C2B
+*pointerColorForeground: #16A085
+
+! Molokai (Color Scheme)
+*foreground:   #d1d1d1
+*background:   #221e2d
+*cursorColor:  #d1d1d1
+
+! black
+*color0:       #272822
+*color8:       #75715e
+
+! red
+*color1:       #f92672
+*color9:       #f92672
+
+! green
+*color2:       #a6e22e
+*color10:      #a6e22e
+
+! yellow
+*color3:       #f4bf75
+*color11:      #f4bf75
+
+! blue
+*color4:       #66d9ef
+*color12:      #66d9ef
+
+! magenta
+*color5:       #ae81ff
+*color13:      #ae81ff
+
+! cyan
+*color6:       #a1efe4
+*color14:      #a1efe4
+
+! white
+*color7:       #f8f8f2
+*color15:      #f9f8f5
+
+Xcursor.theme: xcursor-breeze
+Xcursor.size:        0
+
+! URxvt.font:    xft:DejaVu Sans Mono:pixelsize=14, xft:IPAGothic
+! URxvt.font:    xft:DejaVu Sans Mono:size=13, xft:IPAGothic:size=13, xft:Symbola:pixelsize=22, xft:InconsolataGo Nerd Font Mono:pixelsize=32 
+! URxvt.font:    xft:DejaVu Sans Mono:size=20, xft:IPAGothic:size=20, xft:Symbola:pixelsize=22, xft:InconsolataGo Nerd Font Mono:pixelsize=32 
+URxvt.font: xft:Cica:size=15,\
+            xft:InconsolataGo Nerd Font Mono:pixelsize=32,\
+            xft:Font Awesome 5 Free:pixelsize=22,\
+            xft:Symbola:pixelsize=22
+
+URxvt.depth:                      32
+URxvt.background:                 [100]#222D31
+URxvt*scrollBar:                  false
+URxvt*mouseWheelScrollPage:       false
+URxvt*cursorBlink:                true
+URxvt*background:                 black
+URxvt*foreground:                 grey
+URxvt*saveLines:                  5000
+
+URxvt.transparent: true
+URxvt.shading:     20
+
+! Normal copy-paste keybindings without perls
+URxvt.iso14755:                   false
+URxvt.keysym.Shift-Control-V:     eval:paste_clipboard
+URxvt.keysym.Shift-Control-C:     eval:selection_to_clipboard
+
+!!
+!! urxvt extensions
+!!
+URxvt.perl-ext-common:    default,keyboard-select,resize-font
+
+!! keyboard-select (https://github.com/muennich/urxvt-perls)
+URxvt.keyboard-select.clipboard: true
+URxvt.keysym.C-Escape:    perl:keyboard-select:activate
+URxvt.keysym.C-s:         perl:keyboard-select:search
+
+!! resize-font (https://github.com/simmel/urxvt-resize-font)
+URxvt.keysym.C-minus:     resize-font:smaller
+URxvt.keysym.C-plus:      resize-font:bigger
+
+
+

@@ -1,0 +1,30 @@
+{
+    "type": "script",
+    "description": "META_V",
+    "store": {},
+    "modes": [
+        3
+    ],
+    "usageCount": 34,
+    "prompt": false,
+    "omitTrigger": false,
+    "showInTrayMenu": true,
+    "abbreviation": {
+        "abbreviations": [],
+        "backspace": true,
+        "ignoreCase": false,
+        "immediate": false,
+        "triggerInside": false,
+        "wordChars": "[\\w]"
+    },
+    "hotkey": {
+        "modifiers": [
+            "<meta>"
+        ],
+        "hotKey": "v"
+    },
+    "filter": {
+        "regex": ".*",
+        "isRecursive": false
+    }
+}

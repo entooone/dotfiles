@@ -1,0 +1,3 @@
+#!/bin/bash
+
+(xdg-open "$@" & if [ $? -eq 0 ]; then disown $! ; fi) &> /dev/null

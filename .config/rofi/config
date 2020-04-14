@@ -1,0 +1,14 @@
+! -*- mode:conf-xdefaults; coding: utf-8 -*-
+!! Rofi
+
+rofi.modi: combi,window,run,ssh
+rofi.combi-modi: drun,window
+rofi.font: Cica 24
+rofi.lines: 10
+rofi.location: 0
+rofi.sidebar-mode: true
+rofi.fixed-num-lines: true
+
+rofi.theme: $HOME/.config/rofi/MyTheme.rasi
+rofi.show-icons: true
+rofi.icon-theme: "Tela"

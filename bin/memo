@@ -1,0 +1,35 @@
+#!/bin/bash
+
+memodir=$HOME/.memo
+
+if [ ! -e $memodir ]; then
+    mkdir $memodir
+fi
+
+if [ "$1" = "c" ]; then
+  (cd $memodir; cat `ls -1 .`)
+elif [ "$1" = "l" ]; then
+  ls -1 $memodir
+elif [ "$1" = "t" ]; then
+  for f in $memodir/*; do
+    result=$(egrep -nir "^ *todo" $f)
+    if [ $? -eq 0 ]; then
+      echo "*** ${f#$memodir/} ***"
+      echo "$result" | perl -pe 's/^([0-9]+): *todo *:? */   L\1: /ig'
+    fi  
+  done
+elif [ $# -eq 1 ]; then
+  vim + $memodir/*$1*
+elif [ $# -eq 2 ]; then
+  vim +$2 $memodir/*$1*
+else
+  filename=memo_$(date "+%Y%m%d").md
+  filepath=$memodir/$filename
+  
+  if [ -e $filepath ]; then
+    echo "" >> $filepath
+  fi  
+  echo -e "## $(date '+%Y%m%d %H:%M:%S')\n\n" >> $filepath
+  
+  vim + $filepath
+fi
