@@ -118,19 +118,10 @@ nnoremap Y y$
 " Plugin
 " ==============================
 call plug#begin('~/.vim/plugged')
-"Basic
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-"Plug 'prabirshrestha/asyncomplete.vim'
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
-"Plug 'natebosch/vim-lsc'
 Plug 'itchyny/lightline.vim'
-" ColorScheme
 Plug 'fatih/molokai'
-" Go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 call plug#end()
 
 " ==============================
@@ -148,20 +139,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 "if has('conceal')
 "  set conceallevel=2 concealcursor=niv
 "endif
-
-" ==============================
-" vim-lsp
-" ==============================
-" Go
-if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
-endif
-"let g:lsp_async_completion = 1
 
 " ==============================
 " lightline
@@ -196,45 +173,5 @@ if isdirectory(expand('~/.vim/plugged/molokai'))
     let g:molokai_original = 1
     colorscheme molokai
 endif
-
-" ==============================
-" vim-go
-" ==============================
-nnoremap [vim-go] <Nop>
-nmap <Leader>g [vim-go]
-set autowrite
-map <silent> [vim-go]n :cnext<CR>
-map <silent> [vim-go]p :cprevious<CR>
-nnoremap <silent> [vim-go]a :cclose<CR>
-autocmd BufNewFile,BufRead *.go setlocal nolist noexpandtab tabstop=4 shiftwidth=4
-autocmd FileType go nmap <silent> [vim-go]r <Plug>(go-run)
-autocmd FileType go nmap <silent> [vim-go]t <Plug>(go-test)
-autocmd FileType go nmap <silent> [vim-go]c <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <silent> [vim-go]d <Plug>(go-def)
-autocmd FileType go nmap <silent> [vim-go]D <Plug>(go-def-pop)
-autocmd FileType go nmap <silent> [vim-go]i <Plug>(go-info)
-
-let g:go_fmt_command = "goimports"
-let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_build_constraints = 1
-
-"run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-    let l:file = expand('%')
-    if l:file =~# '^\f\+_test\.go$'
-        call go#test#Test(0, 1)
-    elseif l:file =~# '^\f\+\.go$'
-        call go#cmd#Build(0)
-    endif
-endfunction
-
-autocmd FileType go nmap <silent> [vim-go]b :<C-u>call <SID>build_go_files()<CR>
 
 
