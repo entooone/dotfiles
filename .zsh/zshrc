@@ -47,7 +47,8 @@ export SAVEHIST=1000000
 export SCREENDIR=$HOME/.screen
 export PROMPT=$'\n%F{yellow}\xE2\x97\xB7%T%F{red} \xE2\x9D\x96%n%F{white}%F{green} %~%F{white}\n%F{blue}\xe2\x9d\xaf%F{green}\xe2\x9d\xaf%F{red}\xe2\x9d\xaf%F{white} '
 export TERM=xterm-256color
-export PATH=$PATH:$HOME/local/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/dotfiles/bin
 
 # ==============================
 # Completion
@@ -149,13 +150,6 @@ export JDK_HOME=/usr/lib/jvm/default
 export PATH=$PATH:$JAVA_HOME/bin
 export JUNIT_HOME=/usr/share/java
 export CLASSPATH=$JUNIT_HOME/junit.jar:$CLASSPATH
-
-# =============================
-# mozc
-# =============================
-export GTK_IM_MODULE=fcitx
-export XMODIFIERS="@im=fcitx"
-export QT_IM_MODULE=fcitx
 
 # =============================
 # Rootless Docker
