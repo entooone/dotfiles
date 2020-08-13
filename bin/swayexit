@@ -1,0 +1,31 @@
+#!/bin/sh
+
+[ "$(cat /proc/1/comm)" = "systemd" ] && logind=systemctl || logind=loginctl
+
+lockcmd="swaylock -f"
+
+case "$1" in
+    lock)
+        $lockcmd
+        ;;
+    logout)
+        swaymsg exit
+        ;;
+    suspend)
+        $lockcmd && $logind suspend
+        ;;
+    hibernate)
+        $lockcmd && $logind hibernate
+        ;;
+    reboot)
+        $logind reboot
+        ;;
+    shutdown)
+        $logind poweroff
+        ;;
+    *)
+        echo "swayexit: missing or invalid argument"
+        exit 2
+esac
+
+exit 0
