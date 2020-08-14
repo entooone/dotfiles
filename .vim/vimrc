@@ -14,7 +14,6 @@ set smartcase
 set autoindent
 set ruler
 set number  "行番号の表示
-set list  "行末に $ を表示
 set wildmenu  "コマンドの補完
 set showcmd
 set shiftwidth=4
