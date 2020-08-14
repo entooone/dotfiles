@@ -72,6 +72,7 @@
         "on-scroll-down": "light -U 1"
     },
     "battery": {
+        "interval" : 5,
         "states": {
             "warning": 25,
             "critical": 10
