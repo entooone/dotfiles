@@ -34,6 +34,15 @@ setopt transient_rprompt
 setopt nomultios
 
 # ==============================
+# Prompt
+# ==============================
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b'
+setopt PROMPT_SUBST
+export PROMPT=$'\n%F{yellow}%*%F{red} %n@%m%F{green} %~ %F{blue}${vcs_info_msg_0_}\n%F{white}%(!.#.$)%F{white} '
+
+# ==============================
 # Exports
 # ==============================
 export CLICOLOR=true
@@ -45,7 +54,6 @@ export HISTFILE=$HOME/.zhistory
 export HISTSIZE=100000
 export SAVEHIST=1000000
 export SCREENDIR=$HOME/.screen
-export PROMPT=$'\n%F{yellow}(%*)%F{red} %n@%m%F{green} %~%F{white}\n%F{blue}\xe2\x9d\xaf%F{green}\xe2\x9d\xaf%F{red}\xe2\x9d\xaf%F{white} '
 export TERM=xterm-256color
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/dotfiles/bin
