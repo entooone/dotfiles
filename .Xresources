@@ -73,8 +73,9 @@ URxvt*background:                 black
 URxvt*foreground:                 grey
 URxvt*saveLines:                  5000
 
-URxvt.transparent: true
-URxvt.shading:     20
+URxvt.transparent:    true
+URxvt.shading:        20
+URxvt.internalBorder: 8
 
 ! Normal copy-paste keybindings without perls
 URxvt.iso14755:                   false
