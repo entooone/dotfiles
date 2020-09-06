@@ -1,5 +1,5 @@
 " ==============================
-" General settings
+" General
 " ==============================
 set encoding=utf-8
 set nobomb
@@ -7,102 +7,46 @@ scriptencoding utf-8
 filetype plugin indent on
 syntax on
 highlight Normal ctermbg=none
-set nowrap
 set hlsearch
 set ignorecase
 set smartcase
 set autoindent
-set ruler
-set number  "行番号の表示
-set wildmenu  "コマンドの補完
-set showcmd
+set wildmenu
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
 set expandtab
 set smarttab
-set backspace=indent,eol,start  "バックスペースの有効化
-set clipboard=unnamed  "クリップボードの設定
-set visualbell t_vb=  "ビープ音の設定
-set history=5000  "コマンド履歴の件数
-set fileencoding=utf-8  "保存時の文字コード
-set fileencodings=ucs-boms,utf-8,euc-jp,cp932  "読み込み時の文字コードの自動判別. 左側優先
-set fileformats=unix,dos,mac  "改行コードの自動判別. 左側優先
-set ambiwidth=double  "□や○の文字が崩れる問題を解決
+set backspace=indent,eol,start
+set clipboard=unnamed
+set visualbell t_vb=
+set history=5000
+set fileencoding=utf-8
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932
+set fileformats=unix,dos,mac
+set ambiwidth=single
 set conceallevel=0
+set noruler
+set nonumber
+set noshowcmd
+set noshowmode
+set nowrap
+set showtabline=2
+set laststatus=0
+let mapleader = "\<Space>"
 
 " ==============================
-" autocmd
-" ==============================
-autocmd BufRead,BufNewFile     *.rwi  set filetype=rwi
-autocmd BufNewFile,BufReadPost *.md   set filetype=markdown wrap noexpandtab
-autocmd BufNewFile,BufReadPost *.snip set filetype=snippet
-" sw = softtabstop
-" sts= shiftwidth
-" ts = tabstop
-autocmd FileType python      setlocal sw=4 sts=4 ts=4
-autocmd FileType python      :set dictionary=$HOME/.vim/dict/default.dict,$HOME/.vim/dict/python.dict
-autocmd FileType cs          setlocal sw=4 sts=4 ts=4
-autocmd FileType cs          :set dictionary=$HOME/.vim/dict/default.dict,$HOME/.vim/dict/cs.dict,$HOME/.vim/dict/unity.dict
-autocmd FileType snippet     setlocal sw=2 sts=2 ts=2
-autocmd BufRead,BufNewFile *.txt set wrap
-autocmd BufRead,BufNewFile ~/.ssh/conf.d/*.conf set filetype=sshconfig
-autocmd BufRead,BufNewFile ~/.config/polybar/config set filetype=dosini
-
-" ==============================
-" Cursor Setting
+" Cursor
 " ==============================
 if has('vim_starting')
-    " 挿入モード時に非点滅の縦棒タイプのカーソル
     let &t_SI .= "\e[6 q"
-    " ノーマルモード時に非点滅のブロックタイプのカーソル
     let &t_EI .= "\e[2 q"
-    " 置換モード時に非点滅の下線タイプのカーソル
     let &t_SR .= "\e[4 q"
 endif
 
 " ==============================
-" Cursorline Setting
-" ==============================
-augroup vimrc-auto-cursorline
-  autocmd!
-  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
-  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
-  autocmd WinEnter * call s:auto_cursorline('WinEnter')
-  autocmd WinLeave * call s:auto_cursorline('WinLeave')
-
-  let s:cursorline_lock = 0
-  function! s:auto_cursorline(event)
-    if a:event ==# 'WinEnter'
-      setlocal cursorline
-      let s:cursorline_lock = 2
-    elseif a:event ==# 'WinLeave'
-      setlocal nocursorline
-    elseif a:event ==# 'CursorMoved'
-      if s:cursorline_lock
-        if 1 < s:cursorline_lock
-          let s:cursorline_lock = 1
-        else
-          setlocal nocursorline
-          let s:cursorline_lock = 0
-        endif
-      endif
-    elseif a:event ==# 'CursorHold'
-      setlocal cursorline
-      let s:cursorline_lock = 1
-    endif
-  endfunction
-augroup END
-
-" ==============================
 " KeyMap
 " ==============================
-autocmd BufNewFile,BufRead *.py nnoremap <C-e> :<C-u>!python %
-autocmd BufNewFile,BufRead *.cc nnoremap <C-e> :<C-u>!g++ % -o execute_cpp && ./execute_cpp && rm -f ./execute_cpp
-autocmd BufNewFile,BufRead *.cpp nnoremap <C-e> :<C-u>!g++ % -o execute_cpp && ./execute_cpp && rm -f ./execute_cpp
-autocmd BufNewFile,BufRead *.c nnoremap <C-e> :<C-u>!gcc % -o execute_c && ./execute_c && rm -f ./execute_c
-autocmd BufNewFile,BufRead *.go nnoremap <C-e> :<C-u>!go run %
-autocmd BufNewFile,BufRead *.cs nnoremap <C-e> :<C-u>!dotnet run
 autocmd BufNewFile,BufRead *.txt nnoremap j gj
 autocmd BufNewFile,BufRead *.txt nnoremap k gk
 autocmd BufNewFile,BufRead *.txt vnoremap j gj
@@ -114,6 +58,11 @@ autocmd BufNewFile,BufRead *.md vnoremap k gk
 nnoremap Y y$
 
 " ==============================
+" netrw
+" ==============================
+let g:netrw_liststyle = 3
+
+" ==============================
 " Plugin
 " ==============================
 call plug#begin('~/.vim/plugged')
@@ -121,23 +70,17 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'itchyny/lightline.vim'
 Plug 'fatih/molokai'
+Plug 'easymotion/vim-easymotion'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 call plug#end()
-
-" ==============================
-" Leader
-" ==============================
-let mapleader = "\<Space>"
 
 " ==============================
 " neosnippet
 " ==============================
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <C-k>       <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>       <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"if has('conceal')
-"  set conceallevel=2 concealcursor=niv
-"endif
 
 " ==============================
 " lightline
@@ -145,33 +88,114 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if !has('gui_running')
     set t_Co=256
 endif
-set laststatus=2
-set noshowmode
-let g:lightline = {
-    \ 'colorscheme': 'wombat',
-    \ 'active': {
-    \ 'left': [ ['mode', 'paste'], ['readonly', 'filepath', 'modified'] ]
-    \ },
-    \ 'component_function': {
-    \ 'filepath': 'FilePath'
-    \ },
+"let s:p = {
+"  \ 'normal': {}, 'inactive': {},
+"  \ 'insert': {}, 'replace': {}, 'visual': {},
+"  \ 'tabline': {}
+"  \ }
+"let s:p.normal.left = [
+"  \ ['blue', 'black', 'none'],
+"  \ ['white', 'black']
+"  \ ]
+"let s:p.normal.right   = [
+"  \ ['white', 'black'],
+"  \ ['white', 'black'],
+"  \ ['white', 'black']
+"  \ ]
+"let s:p.inactive.right = [
+"  \ ['gray5', 'black'], 
+"  \ ['gray5', 'black'], 
+"  \ ['gray5', 'black'] 
+"  \ ]
+"let s:p.inactive.left = [ 
+"  \ [ 'gray5', 'black' ]
+"  \ ]
+"let s:p.insert.left = [
+"  \ ['green', 'black', 'none'],
+"  \ ['white', 'black']
+"  \ ]
+"let s:p.insert.right = [
+"  \ [ 'white', 'black' ], 
+"  \ [ 'white', 'black' ],
+"  \ [ 'white', 'black' ]
+"  \ ]
+"let s:p.replace.left = [
+"  \ ['red', 'black', 'none'],
+"  \ ['white', 'black']
+"  \ ]
+"let s:p.visual.left = [ 
+"  \ ['violet', 'black', 'none'], 
+"  \ ['white', 'black'] 
+"  \ ]
+"let s:p.normal.middle = [ [ 'white', 'black', 'none' ] ]
+"let s:p.insert.middle = [ [ 'white', 'black', 'none' ] ]
+"let s:p.replace.middle = s:p.normal.middle
+"let s:p.replace.right  = s:p.normal.right
+"let s:p.tabline.left   = [ [ 'white', 'black' ] ]
+"let s:p.tabline.tabsel = [ [ 'white', 'black' ] ]
+"let s:p.tabline.middle = [ [ 'white', 'black' ] ]
+"let s:p.tabline.right  = [ [ 'white', 'black' ] ]
+"let s:p.normal.error   = [ [ 'white', 'red' ] ]
+"let s:p.normal.warning = [ [ 'white', 'yellow' ] ]
+"let g:lightline#colorscheme#simplicity#palette = lightline#colorscheme#fill(s:p)
+"let g:lightline = {
+"    \ 'colorscheme': 'simplicity'
+"    \ }
+let g:lightline = {}
+let g:lightline.tabline = {
+    \ 'left' : [ [ 'tabs' ] ],
+    \ 'right': [ [ 'filename' ] ]
     \ }
-function! FilePath()
-    if winwidth(0) > 90
-        return expand('%:s')
-    else
-        return expand('%:t')
-    endif
+let g:lightline.tab = {
+    \ 'active': [ 'tabnum', 'filename', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'filename', 'modified' ]
+    \ }
+let g:lightline.enable = {
+    \ 'statusline': 0,
+    \ 'tabline': 1
+    \ }
+function! GitCurrentBranch() abort
+    return system('git branch --show-current')
 endfunction
 
 " ==============================
-" Molokai
+" molokai
 " ==============================
+augroup TransparentBG
+    autocmd!
+    autocmd Colorscheme * highlight Normal          ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight VertSplit       ctermbg=NONE guibg=NONE ctermfg=238 
+    autocmd Colorscheme * highlight NonText         ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight LineNr          ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight Folded          ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight EndOfBuffer     ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight Error           ctermbg=NONE guibg=NONE cterm=underline
+    autocmd Colorscheme * highlight Todo            ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight ToolbarButton   ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight StatusLine      ctermbg=NONE guibg=NONE ctermfg=238 cterm=NONE
+    autocmd Colorscheme * highlight StatusLineNC    ctermbg=NONE guibg=NONE ctermfg=238 cterm=NONE
+    autocmd Colorscheme * highlight StatusLineTerm  ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight StatusLineTerNC ctermbg=NONE guibg=NONE
+    autocmd Colorscheme * highlight SignColumn      ctermbg=NONE guibg=NONE
+augroup END
 if isdirectory(expand('~/.vim/plugged/molokai'))
     let g:rehash256 = 1
-    let g:molokai_original = 1
     colorscheme molokai
-    hi Normal ctermbg=NONE guibg=NONE
 endif
+function StatusLine()
+    return repeat('─', winwidth(0))
+endfunction
+set statusline=%{StatusLine()}
 
+" ==============================
+" easymotion
+" ==============================
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
+nmap <leader>s <Plug>(easymotion-overwin-f2)
+
+" ==============================
+" command
+" ==============================
+nmap <leader>r :source ~/.vimrc<CR>
 
