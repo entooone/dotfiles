@@ -6,7 +6,6 @@ set nobomb
 scriptencoding utf-8
 filetype plugin indent on
 syntax on
-highlight Normal ctermbg=none
 set hlsearch
 set ignorecase
 set smartcase
