@@ -166,8 +166,51 @@ let g:asyncomplete_auto_popup = 0
 imap <C-L> <Plug>(asyncomplete_force_refresh)
 
 
+" terminal
+"─────────────────────────────
+function! TermOpen() abort
+    if empty(term_list())
+        execute "terminal"
+    else
+        call win_gotoid(win_findbuf(term_list()[0])[0])
+    endif
+endfunction
+function! ExitTerm() abort
+    if !empty(term_list())
+        let term_tabnr = Bufnr2tabnr(term_list()[0])
+        let num_win_in_tabnr = tabpagewinnr(term_tabnr[0], '$')
+        if num_win_in_tabnr == 1
+            call term_sendkeys(term_list()[0], "exit\<CR>")
+        endif
+    endif
+endfunction
+function! CreateBufnr2tabnrDict() abort
+  let bufnr2tabnr_dict = {}
+  for tnr in range(1, tabpagenr('$'))
+    for bnr in tabpagebuflist(tnr)
+      let bufnr2tabnr_dict[bnr] = has_key(bufnr2tabnr_dict, bnr) ? add(bufnr2tabnr_dict[bnr], tnr) : [tnr]
+    endfor
+  endfor
+  for val in values(bufnr2tabnr_dict)
+    call uniq(sort(val))
+  endfor
+  return bufnr2tabnr_dict
+endfunction
+function! Bufnr2tabnr(bnr) abort
+  return CreateBufnr2tabnrDict()[a:bnr]
+endfunction
+augroup TermExit
+  autocmd!
+  autocmd BufEnter * call ExitTerm()
+augroup END
+
 " command
 "─────────────────────────────
-nmap <leader>r :<C-u>source ~/.vimrc<CR>
-nmap <leader>g :<C-u>terminal ++close tig<CR>
-nmap <leader>e :<C-u>Se<CR>
+nnoremap <silent> <leader>R :<C-u>source ~/.vimrc<CR>
+nnoremap <silent> <leader>g :<C-u>terminal ++close tig<CR>
+nnoremap <silent> <leader>e :<C-u>Se<CR>
+nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
+augroup GoConf
+    autocmd!
+    autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
+augroup END
