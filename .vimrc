@@ -111,7 +111,8 @@ augroup TransparentBG
     autocmd Colorscheme * highlight TabLine          ctermbg=NONE guibg=NONE ctermfg=59 cterm=none
     autocmd Colorscheme * highlight TabLineSel       ctermbg=NONE guibg=NONE cterm=none
     autocmd Colorscheme * highlight TabLineFill      ctermbg=NONE guibg=NONE cterm=none
-    autocmd Colorscheme * highlight link GitBranch Special
+    autocmd Colorscheme * highlight link GitBranch   Special
+    autocmd Colorscheme * highlight link ProjectPath PreProc
 augroup END
 if isdirectory(expand('~/.vim/plugged/molokai'))
     let g:rehash256 = 1
@@ -127,7 +128,7 @@ function! s:tabpage_label(n) abort
     let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '*' : ''
     let sp = ' '
     let current = bufnrs[tabpagewinnr(a:n) - 1]
-    let fname = bufname(current)
+    let fname = fnamemodify(bufname(current), ":t")
     let label = a:n . sp . fname . mod
     let label = a:n is tabpagenr() ? '[' . label . ']' : sp . label . sp
     return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
@@ -139,12 +140,16 @@ function! s:get_git_branch() abort
     endif
     return strpart(branch, 0, strlen(branch)-1)
 endfunction
+function! s:get_project_name() abort
+    return fnamemodify(getcwd(), ":t")
+endfunction
 function! MakeTabLine() abort
     let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
     let sep = ''
     let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
     let branch = s:get_git_branch()
-    let info = '%#GitBranch#' . branch
+    let projectPath = s:get_project_name()
+    let info = '%#ProjectPath#' . projectPath . ' ' . '%#GitBranch#' . branch
     return  tabpages .  '%=' . info
 endfunction
 
