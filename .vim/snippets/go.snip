@@ -1,0 +1,20 @@
+snippet     fmpf
+options     head
+    fmt.Printf("${1}\n"${2:})
+
+snippet main
+abbr    main
+    package main
+
+    func main() {
+        ${0:TARGET}
+    }
+
+snippet gen
+abbr    go:generate
+    //go:generate ${0:COMMAND}
+
+snippet stringer
+abbr    go:generate
+    stringer -type ${0:TYPE}
+    
