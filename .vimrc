@@ -64,10 +64,61 @@ nnoremap <C-H> gT
 nnoremap <C-L> gt
 
 
+" StatusLine / TabLine
+"─────────────────────────────
+function! MakeStatusLine() abort
+    return repeat('─', winwidth(0))
+endfunction
+
+function! s:tabpage_label(n) abort
+    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+    let bufnrs = tabpagebuflist(a:n)
+    let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '*' : ''
+    let sp = ' '
+    let current = bufnrs[tabpagewinnr(a:n) - 1]
+    let fname = fnamemodify(bufname(current), ":t")
+    let label = a:n . sp . fname . mod
+    let label = a:n is tabpagenr() ? '[' . label . ']' : sp . label . sp
+    return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
+endfunction
+
+function! s:get_git_branch() abort
+    let branch = system('git symbolic-ref --short HEAD')
+    if v:shell_error != 0
+        return ''
+    endif
+    return strpart(branch, 0, strlen(branch)-1)
+endfunction
+
+function! s:get_project_name() abort
+    return fnamemodify(getcwd(), ":t")
+endfunction
+
+function! MakeTabLine() abort
+    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
+    let sep = ''
+    let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
+    let branch = s:get_git_branch()
+    let projectPath = s:get_project_name()
+    let info = '%#ProjectPath#' . projectPath . ' ' . '%#GitBranch#' . branch
+    return  tabpages .  '%=' . info
+endfunction
+
+set fillchars+=vert:\│
+set statusline=%!MakeStatusLine()
+set tabline=%!MakeTabLine()
+
+
 " netrw
 "─────────────────────────────
+function! NetrwMapping_gt(islocal) abort
+  return "normal! gt"
+endfunction
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
+let g:Netrw_UserMaps = [
+\   ['<C-l>', 'NetrwMapping_gt'],
+\ ]
 
 " Plugin
 "─────────────────────────────
@@ -89,6 +140,15 @@ call plug#end()
 imap <C-k>       <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>       <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+let g:neosnippet#snippets_directory='~/.vim/snippets'
+function! OpenSnippetFile() abort
+    let ext = expand('%:e')
+    if ext ==# '' 
+        echo 'cannot open the .snip file of ' . expand('%') 
+        return
+    endif
+    execute 'sp ' . g:neosnippet#snippets_directory . '/' . ext . '.snip'
+endfunction
 
 
 " molokai
@@ -119,45 +179,6 @@ if isdirectory(expand('~/.vim/plugged/molokai'))
     let g:rehash256 = 1
     colorscheme molokai
 endif
-function! MakeStatusLine() abort
-    return repeat('─', winwidth(0))
-endfunction
-
-function! s:tabpage_label(n) abort
-    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-    let bufnrs = tabpagebuflist(a:n)
-    let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '*' : ''
-    let sp = ' '
-    let current = bufnrs[tabpagewinnr(a:n) - 1]
-    let fname = fnamemodify(bufname(current), ":t")
-    let label = a:n . sp . fname . mod
-    let label = a:n is tabpagenr() ? '[' . label . ']' : sp . label . sp
-    return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
-endfunction
-function! s:get_git_branch() abort
-    let branch = system('git symbolic-ref --short HEAD')
-    if v:shell_error != 0
-        return ''
-    endif
-    return strpart(branch, 0, strlen(branch)-1)
-endfunction
-function! s:get_project_name() abort
-    return fnamemodify(getcwd(), ":t")
-endfunction
-function! MakeTabLine() abort
-    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let sep = ''
-    let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-    let branch = s:get_git_branch()
-    let projectPath = s:get_project_name()
-    let info = '%#ProjectPath#' . projectPath . ' ' . '%#GitBranch#' . branch
-    return  tabpages .  '%=' . info
-endfunction
-
-set fillchars+=vert:\│
-set statusline=%!MakeStatusLine()
-set tabline=%!MakeTabLine()
-
 
 " easymotion
 "─────────────────────────────
@@ -216,6 +237,7 @@ nnoremap <silent> <leader>R :<C-u>source ~/.vimrc<CR>
 nnoremap <silent> <leader>g :<C-u>terminal ++close tig<CR>
 nnoremap <silent> <leader>e :<C-u>Se<CR>
 nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
+nnoremap <silent> <leader>s :<C-u>call OpenSnippetFile()<CR>
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
