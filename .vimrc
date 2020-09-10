@@ -142,12 +142,12 @@ xmap <C-k>       <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 function! OpenSnippetFile() abort
-    let ext = expand('%:e')
-    if ext ==# '' 
+    let ftype = &filetype
+    if ftype ==# '' 
         echo 'cannot open the .snip file of ' . expand('%') 
         return
     endif
-    execute 'sp ' . g:neosnippet#snippets_directory . '/' . ext . '.snip'
+    execute 'sp ' . g:neosnippet#snippets_directory . '/' . ftype . '.snip'
 endfunction
 
 
