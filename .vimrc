@@ -184,8 +184,8 @@ endif
 "─────────────────────────────
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-map  <leader>s <Plug>(easymotion-bd-f)
-nmap <leader>s <Plug>(easymotion-overwin-f)
+map  <leader>m <Plug>(easymotion-bd-f)
+nmap <leader>m <Plug>(easymotion-overwin-f)
 
 " asyncomplete
 "─────────────────────────────
@@ -238,6 +238,7 @@ nnoremap <silent> <leader>g :<C-u>terminal ++close tig<CR>
 nnoremap <silent> <leader>e :<C-u>Se<CR>
 nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
 nnoremap <silent> <leader>s :<C-u>call OpenSnippetFile()<CR>
+nnoremap <silent> <leader>f :<C-u>FZF<CR>
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
