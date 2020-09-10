@@ -239,6 +239,7 @@ nnoremap <silent> <leader>e :<C-u>Se<CR>
 nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
 nnoremap <silent> <leader>s :<C-u>call OpenSnippetFile()<CR>
 nnoremap <silent> <leader>f :<C-u>FZF<CR>
+nnoremap <silent> <leader>d :<C-u>LspDefinition<CR>
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
