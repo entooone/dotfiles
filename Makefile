@@ -5,7 +5,7 @@ SLINKFLAG := -sf
 setup-vim:
 	ln $(SLINKFLAG) $(DOTFILES)/.vim ~
 	ln $(SLINKFLAG) $(DOTFILES)/.vimrc ~
-	vim +":PlugInstall | :qa"
+	vim +PlugInstall +qall
 
 setup-zsh:
 	ln $(SLINKFLAG) $(DOTFILES)/.zsh ~
