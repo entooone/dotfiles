@@ -120,6 +120,7 @@ let g:Netrw_UserMaps = [
 \   ['<C-l>', 'NetrwMapping_gt'],
 \ ]
 
+
 " Plugin
 "─────────────────────────────
 call plug#begin('~/.vim/plugged')
@@ -230,6 +231,7 @@ augroup TermExit
   autocmd!
   autocmd BufEnter * call ExitTerm()
 augroup END
+
 
 " command
 "─────────────────────────────
