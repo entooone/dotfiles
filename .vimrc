@@ -62,6 +62,7 @@ autocmd BufNewFile,BufRead *.md vnoremap k gk
 nnoremap Y y$
 nnoremap <C-H> gT
 nnoremap <C-L> gt
+nnoremap <silent> Q :<C-u>q<CR>
 
 
 " StatusLine / TabLine
@@ -240,6 +241,7 @@ nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
 nnoremap <silent> <leader>s :<C-u>call OpenSnippetFile()<CR>
 nnoremap <silent> <leader>f :<C-u>FZF<CR>
 nnoremap <silent> <leader>d :<C-u>LspDefinition<CR>
+nnoremap <silent> <leader>p :<C-u>LspDocumentDiagnostics<CR>
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
