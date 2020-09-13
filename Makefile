@@ -1,6 +1,7 @@
 DOTFILES = ${PWD}
 CONFIGDIR = ${HOME}/.config
 SLINKFLAG := -sf
+.DEFAULT_GOAL := setup-cli
 
 setup-vim:
 	ln $(SLINKFLAG) $(DOTFILES)/.vim ~
@@ -17,13 +18,13 @@ setup-tmux:
 setup-tig:
 	ln $(SLINKFLAG) $(DOTFILES)/.tigrc ~
 
-make-configdir:
+.config:
 	if [ ! -d $(CONFIGDIR) ]; then mkdir $(CONFIGDIR); fi
 
 setup-urxvt:
 	ln $(SLINKFLAG) $(DOTFILES)/.urxvt $(CONFIGDIR)
 
-setup-sway: make-configdir
+setup-sway: .config
 	ln $(SLINKFLAG) $(DOTFILES)/.config/sway $(CONFIGDIR)
 	ln $(SLINKFLAG) $(DOTFILES)/.config/waybar $(CONFIGDIR)
 
@@ -31,5 +32,5 @@ setup-cli: setup-zsh setup-tmux setup-tig setup-vim
 
 setup-gui: setup-urxvt setup-sway
 
-.PHONY: setup-vim setup-zsh setup-tmux setup-tig make-configdir setup-urxvt setup-sway setup-cli setup-gui
+.PHONY: setup-vim setup-zsh setup-tmux setup-tig .config setup-urxvt setup-sway setup-cli setup-gui
 
