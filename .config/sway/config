@@ -295,7 +295,7 @@ include /etc/sway/config.d/*
 # ===================================
 exec fcitx-autostart
 exec ~/.config/waybar/launch.sh
-exec redshift-gtk
+exec gammastep-indicator
 exec dropbox
 
 xwayland enable
