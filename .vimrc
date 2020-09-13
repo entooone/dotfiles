@@ -143,14 +143,7 @@ imap <C-k>       <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>       <Plug>(neosnippet_expand_target)
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 let g:neosnippet#snippets_directory='~/.vim/snippets'
-function! OpenSnippetFile() abort
-    let ftype = &filetype
-    if ftype ==# '' 
-        echo 'cannot open the .snip file of ' . expand('%') 
-        return
-    endif
-    execute 'sp ' . g:neosnippet#snippets_directory . '/' . ftype . '.snip'
-endfunction
+nnoremap <silent> <leader>s :<C-u>NeoSnippetEdit -split -horizontal<CR>
 
 
 " molokai
@@ -240,7 +233,6 @@ nnoremap <silent> <leader>R :<C-u>source ~/.vimrc<CR>
 nnoremap <silent> <leader>g :<C-u>terminal ++close tig<CR>
 nnoremap <silent> <leader>e :<C-u>Se<CR>
 nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
-nnoremap <silent> <leader>s :<C-u>call OpenSnippetFile()<CR>
 nnoremap <silent> <leader>f :<C-u>FZF<CR>
 nnoremap <silent> <leader>d :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p :<C-u>LspDocumentDiagnostics<CR>

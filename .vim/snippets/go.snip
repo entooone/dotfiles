@@ -1,9 +1,10 @@
-snippet     fmpf
-options     head
+snippet pf
+options head
     fmt.Printf("${1}\n"${2:})
 
 snippet main
 abbr    main
+options head
     package main
 
     func main() {
@@ -12,9 +13,44 @@ abbr    main
 
 snippet gen
 abbr    go:generate
+options head
     //go:generate ${0:COMMAND}
 
 snippet stringer
 abbr    go:generate
+options head
     //go:generate stringer -type ${0:TYPE}
     
+snippet ebiten
+abbr    ebiten template
+options head
+    package main
+    
+    import (
+    	"log"
+    
+    	"github.com/hajimehoshi/ebiten"
+    )
+    
+    type Game struct{}
+    
+    func (g *Game) Update(screen *ebiten.Image) error {
+    	return nil
+    }
+    
+    func (g *Game) Draw(screen *ebiten.Image) {
+    }
+    
+    func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+    	return 320, 240
+    }
+
+    func main() {
+    	game := &Game{}
+    	ebiten.SetWindowSize(640, 480)
+    	ebiten.SetWindowTitle("Your game's title")
+    
+    	if err := ebiten.RunGame(game); err != nil {
+    		log.Fatal(err)
+    	}
+    }
