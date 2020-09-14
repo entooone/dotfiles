@@ -54,3 +54,12 @@ options head
     		log.Fatal(err)
     	}
     }
+
+snippet method
+abbr    func ...() { ... }
+alias   m
+options     head
+  func (${1:t T}) ${2:fname}(${3}) ${4:int }{
+    ${0:TARGET:return }
+  }
+    
