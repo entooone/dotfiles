@@ -3,7 +3,10 @@ CONFIGDIR = ${HOME}/.config
 SLINKFLAG := -sf
 .DEFAULT_GOAL := setup-cli
 
-setup-vim:
+setup-vim-golang:
+	GO111MODULE=off go get -u github.com/110y/goreturn
+
+setup-vim: setup-vim-golang
 	ln $(SLINKFLAG) $(DOTFILES)/.vim ~
 	ln $(SLINKFLAG) $(DOTFILES)/.vimrc ~
 	vim +PlugInstall +qall
@@ -32,5 +35,5 @@ setup-cli: setup-zsh setup-tmux setup-tig setup-vim
 
 setup-gui: setup-urxvt setup-sway
 
-.PHONY: setup-vim setup-zsh setup-tmux setup-tig .config setup-urxvt setup-sway setup-cli setup-gui
+.PHONY: setup-vim setup-vim-golang setup-zsh setup-tmux setup-tig .config setup-urxvt setup-sway setup-cli setup-gui
 

@@ -63,3 +63,14 @@ options     head
     ${0:TARGET:return }
   }
     
+snippet ife
+abbr    if err != nil { ... }
+options     head
+    if err != nil {
+        ${0:TARGET}
+    }
+
+snippet return
+abbr    return ...
+options     head
+    `g:GoReturn()`
