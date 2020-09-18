@@ -236,6 +236,7 @@ nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
 nnoremap <silent> <leader>f :<C-u>FZF<CR>
 nnoremap <silent> <leader>d :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p :<C-u>LspDocumentDiagnostics<CR>
+nmap     <buffer> <leader>n <plug>(lsp-references)
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
