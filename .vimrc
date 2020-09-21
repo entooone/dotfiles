@@ -121,7 +121,6 @@ let g:Netrw_UserMaps = [
 \   ['<C-l>', 'NetrwMapping_gt'],
 \ ]
 
-
 " Plugin
 "─────────────────────────────
 call plug#begin('~/.vim/plugged')
@@ -134,6 +133,7 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-goimports'
+Plug 'sebdah/vim-delve'
 call plug#end()
 
 
@@ -167,6 +167,7 @@ augroup TransparentBG
     autocmd Colorscheme * highlight TabLine          ctermbg=NONE guibg=NONE ctermfg=59 cterm=none
     autocmd Colorscheme * highlight TabLineSel       ctermbg=NONE guibg=NONE cterm=none
     autocmd Colorscheme * highlight TabLineFill      ctermbg=NONE guibg=NONE cterm=none
+    autocmd Colorscheme * highlight WarningMsg       ctermbg=NONE guibg=NONE ctermfg=222 cterm=bold
     autocmd Colorscheme * highlight link GitBranch   Special
     autocmd Colorscheme * highlight link ProjectPath PreProc
 augroup END
@@ -226,7 +227,6 @@ augroup TermExit
   autocmd BufEnter * call ExitTerm()
 augroup END
 
-
 " command
 "─────────────────────────────
 nnoremap <silent> <leader>R :<C-u>source ~/.vimrc<CR>
@@ -239,5 +239,6 @@ nnoremap <silent> <leader>p :<C-u>LspDocumentDiagnostics<CR>
 nmap     <buffer> <leader>n <plug>(lsp-references)
 augroup GoConf
     autocmd!
-    autocmd BufNewFile,BufRead *.go nnoremap <leader>r :<C-u>terminal ++noclose go run .<CR>
+    autocmd BufNewFile,BufRead *.go nnoremap <silent> <leader>r :<C-u>terminal ++noclose go run .<CR>
+    autocmd BufNewFile,BufRead *.go nnoremap <leader>b :<C-u>DlvToggleBreakpoint<CR>
 augroup END
