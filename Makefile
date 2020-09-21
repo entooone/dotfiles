@@ -3,23 +3,15 @@ CONFIGDIR = ${HOME}/.config
 SLINKFLAG := -sf
 .DEFAULT_GOAL := setup-cli
 
-.PHONY: goreturn
-goreturn:
-	if ! type goreturn &> /dev/null; then \
-		GO111MODULE=off go get -u github.com/110y/goreturn; \
-	fi
-
-.PHONY: dlv
-dlv:
-	if ! type dlv &> /dev/null; then \
-		GO111MODULE=off go get -u github.com/go-delve/delve/cmd/dlv; \
-	fi
-
-.PHONY: setup-vim-golang
-setup-vim-golang: goreturn dlv
+.PHONY: update-gotools
+update-gotools:
+	GO111MODULE=off go get -u -v \
+		golang.org/x/tools/gopls \
+		github.com/go-delve/delve/cmd/dlv \
+		github.com/110y/goreturn
 
 .PHONY: setup-vim
-setup-vim: setup-vim-golang
+setup-vim:
 	ln $(SLINKFLAG) $(DOTFILES)/.vim ~
 	ln $(SLINKFLAG) $(DOTFILES)/.vimrc ~
 	vim +PlugInstall +qall
