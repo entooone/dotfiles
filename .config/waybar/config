@@ -60,6 +60,7 @@
         "on-click": "pavucontrol"
     },
     "network": {
+        "interval" : 5,
         "format": "{ifname}",
         "format-wifi": " {essid}",
         "format-ethernet": " {ifname}",
