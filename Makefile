@@ -8,7 +8,8 @@ update-gotools:
 	GO111MODULE=off go get -u -v \
 		golang.org/x/tools/gopls \
 		github.com/go-delve/delve/cmd/dlv \
-		github.com/110y/goreturn
+		github.com/110y/goreturn \
+		github.com/josharian/impl
 
 .PHONY: setup-vim
 setup-vim:
