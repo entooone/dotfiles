@@ -34,7 +34,6 @@ set nowrap
 set showtabline=2
 set guioptions-=e
 set laststatus=0
-let mapleader = "\<Space>"
 if !has('gui_running')
     set t_Co=256
 endif
@@ -47,22 +46,6 @@ if has('vim_starting')
     let &t_EI .= "\e[2 q"
     let &t_SR .= "\e[4 q"
 endif
-
-
-" KeyMap
-"─────────────────────────────
-autocmd BufNewFile,BufRead *.txt nnoremap j gj
-autocmd BufNewFile,BufRead *.txt nnoremap k gk
-autocmd BufNewFile,BufRead *.txt vnoremap j gj
-autocmd BufNewFile,BufRead *.txt vnoremap k gk
-autocmd BufNewFile,BufRead *.md nnoremap j gj
-autocmd BufNewFile,BufRead *.md nnoremap k gk
-autocmd BufNewFile,BufRead *.md vnoremap j gj
-autocmd BufNewFile,BufRead *.md vnoremap k gk
-nnoremap Y y$
-nnoremap <C-H> gT
-nnoremap <C-L> gt
-nnoremap <silent> Q :<C-u>q<CR>
 
 
 " StatusLine / TabLine
@@ -110,6 +93,26 @@ set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
 
+" session
+"─────────────────────────────
+let s:session_path = expand('~/.vim/sessions')
+if !isdirectory(s:session_path)
+    call mkdir(s:session_path, "p")
+endif
+function! s:saveSession(file) abort
+    execute 'silent mksession!' s:session_path . '/' . a:file
+endfunction
+function! s:loadSession(file) abort
+    execute 'silent source' a:file
+endfunction
+function! s:deleteSession(file) abort
+    call delete(expand(a:file))
+endfunction
+command! -nargs=1 SaveSession   call s:saveSession(<f-args>)
+command! -nargs=1 LoadSession   call s:loadSession(<f-args>)
+command! -nargs=1 DeleteSession call s:deleteSession(<f-args>)
+
+
 " netrw
 "─────────────────────────────
 function! NetrwMapping_gt(islocal) abort
@@ -120,6 +123,7 @@ let g:netrw_banner = 0
 let g:Netrw_UserMaps = [
 \   ['<C-l>', 'NetrwMapping_gt'],
 \ ]
+
 
 " Plugin
 "─────────────────────────────
@@ -132,6 +136,7 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
+Plug 'junegunn/fzf.vim'
 Plug 'mattn/vim-goimports'
 Plug 'sebdah/vim-delve'
 call plug#end()
@@ -139,11 +144,7 @@ call plug#end()
 
 " neosnippet
 "─────────────────────────────
-imap <C-k>       <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>       <Plug>(neosnippet_expand_target)
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 let g:neosnippet#snippets_directory='~/.vim/snippets'
-nnoremap <silent> <leader>s :<C-u>NeoSnippetEdit -split -horizontal<CR>
 
 
 " molokai
@@ -176,67 +177,56 @@ if isdirectory(expand('~/.vim/plugged/molokai'))
     colorscheme molokai
 endif
 
+
 " easymotion
 "─────────────────────────────
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-map  <leader>m <Plug>(easymotion-bd-f)
-nmap <leader>m <Plug>(easymotion-overwin-f)
+
 
 " asyncomplete
 "─────────────────────────────
 let g:asyncomplete_auto_popup = 0
-imap <C-L> <Plug>(asyncomplete_force_refresh)
 
-
-" terminal
+" fzf
 "─────────────────────────────
-function! TermOpen() abort
-    if empty(term_list())
-        execute "terminal"
-    else
-        call win_gotoid(win_findbuf(term_list()[0])[0])
-    endif
-endfunction
-function! ExitTerm() abort
-    if !empty(term_list())
-        let term_tabnr = Bufnr2tabnr(term_list()[0])
-        let num_win_in_tabnr = tabpagewinnr(term_tabnr[0], '$')
-        if num_win_in_tabnr == 1
-            call term_sendkeys(term_list()[0], "exit\<CR>")
-        endif
-    endif
-endfunction
-function! CreateBufnr2tabnrDict() abort
-  let bufnr2tabnr_dict = {}
-  for tnr in range(1, tabpagenr('$'))
-    for bnr in tabpagebuflist(tnr)
-      let bufnr2tabnr_dict[bnr] = has_key(bufnr2tabnr_dict, bnr) ? add(bufnr2tabnr_dict[bnr], tnr) : [tnr]
-    endfor
-  endfor
-  for val in values(bufnr2tabnr_dict)
-    call uniq(sort(val))
-  endfor
-  return bufnr2tabnr_dict
-endfunction
-function! Bufnr2tabnr(bnr) abort
-  return CreateBufnr2tabnrDict()[a:bnr]
-endfunction
-augroup TermExit
-  autocmd!
-  autocmd BufEnter * call ExitTerm()
+let g:fzf_preview_window = 'right:60%'
+
+
+" keymap
+"─────────────────────────────
+let mapleader = "\<Space>"
+nnoremap          Q           :<C-u>q<CR>
+nnoremap          Y           y$
+nnoremap          <C-H>       gT
+nnoremap          <C-L>       gt
+imap              <C-L>       <Plug>(asyncomplete_force_refresh)
+imap              <C-k>       <Plug>(neosnippet_expand_or_jump)
+xmap              <C-k>       <Plug>(neosnippet_expand_target)
+smap              <expr><TAB> neosnippet#expandable_or_jumpable() ?
+nnoremap <silent> <leader>s   :<C-u>NeoSnippetEdit -split -horizontal<CR>
+map               <leader>m   <Plug>(easymotion-bd-f)
+nmap              <leader>m   <Plug>(easymotion-overwin-f)
+nmap     <buffer> <leader>n   <plug>(lsp-references)
+nnoremap <silent> <leader>R   :<C-u>source ~/.vimrc<CR>
+nnoremap <silent> <leader>g   :<C-u>terminal ++close tig<CR>
+nnoremap <silent> <leader>e   :<C-u>Se<CR>
+nnoremap <silent> <leader>t   :<C-u>terminal<CR>
+nnoremap <silent> <leader>f   :<C-u>Files<CR>
+nnoremap <silent> <leader>d   :<C-u>LspDefinition<CR>
+nnoremap <silent> <leader>p   :<C-u>LspDocumentDiagnostics<CR>
+augroup TxtConf
+    autocmd BufNewFile,BufRead *.txt nnoremap j gj
+    autocmd BufNewFile,BufRead *.txt nnoremap k gk
+    autocmd BufNewFile,BufRead *.txt vnoremap j gj
+    autocmd BufNewFile,BufRead *.txt vnoremap k gk
 augroup END
-
-" command
-"─────────────────────────────
-nnoremap <silent> <leader>R :<C-u>source ~/.vimrc<CR>
-nnoremap <silent> <leader>g :<C-u>terminal ++close tig<CR>
-nnoremap <silent> <leader>e :<C-u>Se<CR>
-nnoremap <silent> <leader>t :<C-u>call TermOpen()<CR>
-nnoremap <silent> <leader>f :<C-u>FZF<CR>
-nnoremap <silent> <leader>d :<C-u>LspDefinition<CR>
-nnoremap <silent> <leader>p :<C-u>LspDocumentDiagnostics<CR>
-nmap     <buffer> <leader>n <plug>(lsp-references)
+augroup MdConf
+    autocmd BufNewFile,BufRead *.md nnoremap j gj
+    autocmd BufNewFile,BufRead *.md nnoremap k gk
+    autocmd BufNewFile,BufRead *.md vnoremap j gj
+    autocmd BufNewFile,BufRead *.md vnoremap k gk
+augroup END
 augroup GoConf
     autocmd!
     autocmd BufNewFile,BufRead *.go nnoremap <silent> <leader>r :<C-u>terminal ++noclose go run .<CR>
