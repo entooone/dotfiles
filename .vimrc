@@ -93,26 +93,6 @@ set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
 
-" session
-"─────────────────────────────
-let s:session_path = expand('~/.vim/sessions')
-if !isdirectory(s:session_path)
-    call mkdir(s:session_path, "p")
-endif
-function! s:saveSession(file) abort
-    execute 'silent mksession!' s:session_path . '/' . a:file
-endfunction
-function! s:loadSession(file) abort
-    execute 'silent source' a:file
-endfunction
-function! s:deleteSession(file) abort
-    call delete(expand(a:file))
-endfunction
-command! -nargs=1 SaveSession   call s:saveSession(<f-args>)
-command! -nargs=1 LoadSession   call s:loadSession(<f-args>)
-command! -nargs=1 DeleteSession call s:deleteSession(<f-args>)
-
-
 " netrw
 "─────────────────────────────
 function! NetrwMapping_gt(islocal) abort
@@ -193,6 +173,34 @@ let g:asyncomplete_auto_popup = 0
 let g:fzf_preview_window = 'right:60%'
 
 
+" session
+"─────────────────────────────
+let s:session_path = expand('~/.vim/sessions')
+if !isdirectory(s:session_path)
+    call mkdir(s:session_path, "p")
+endif
+function! s:saveSession(file) abort
+    execute 'silent mksession!' s:session_path . '/' . a:file
+endfunction
+function! s:loadSession(file) abort
+    execute 'silent source' a:file
+endfunction
+function! s:deleteSession(file) abort
+    call delete(expand(a:file))
+endfunction
+command! -nargs=0 SaveSession call s:saveSession(substitute(expand('%:p:h'), '/', '_', 'g'))
+command! FloadSession call fzf#run({
+\  'source': split(glob(s:session_path . "/*"), "\n"),
+\  'sink':    function('s:loadSession'),
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+command! FdeleteSession call fzf#run({
+\  'source': split(glob(s:session_path . "/*"), "\n"),
+\  'sink':    function('s:deleteSession'),
+\  'options': '-m -x +s',
+\  'down':    '40%'})
+
+
 " keymap
 "─────────────────────────────
 let mapleader = "\<Space>"
@@ -215,6 +223,9 @@ nnoremap <silent> <leader>t   :<C-u>terminal<CR>
 nnoremap <silent> <leader>f   :<C-u>Files<CR>
 nnoremap <silent> <leader>d   :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p   :<C-u>LspDocumentDiagnostics<CR>
+nnoremap          <leader>SS  :<C-u>SaveSession<CR>
+nnoremap <silent> <leader>SL  :<C-u>FloadSession<CR>
+nnoremap <silent> <leader>SD  :<C-u>FdeleteSession<CR>
 augroup TxtConf
     autocmd BufNewFile,BufRead *.txt nnoremap j gj
     autocmd BufNewFile,BufRead *.txt nnoremap k gk
