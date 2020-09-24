@@ -11,9 +11,9 @@ set ignorecase
 set smartcase
 set autoindent
 set wildmenu
-set shiftwidth=4
-set softtabstop=4
 set tabstop=4
+set shiftwidth=0
+set softtabstop=0
 set expandtab
 set smarttab
 set backspace=indent,eol,start
@@ -233,6 +233,7 @@ augroup TxtConf
     autocmd BufNewFile,BufRead *.txt vnoremap k gk
 augroup END
 augroup MdConf
+    set noexpandtab
     autocmd BufNewFile,BufRead *.md nnoremap j gj
     autocmd BufNewFile,BufRead *.md nnoremap k gk
     autocmd BufNewFile,BufRead *.md vnoremap j gj
