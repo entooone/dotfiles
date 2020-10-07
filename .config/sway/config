@@ -217,12 +217,11 @@ bindsym $mod+r mode "resize"
 #
 # Mode System:
 #
-set $mode_system (l)ock, (e)xit, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+set $mode_system (l)ock, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 set $swayexit ~/dotfiles/bin/swayexit
 mode "$mode_system" {
     bindsym l exec $swayexit lock, mode "default"
     bindsym s exec $swayexit suspend, mode "default"
-    bindsym e exec $swayexit logout, mode "default"
     bindsym h exec $swayexit hibernate, mode "default"
     bindsym r exec $swayexit reboot, mode "default"
     bindsym Shift+s exec --no-startup-id myi3exit shutdown, mode "default"
