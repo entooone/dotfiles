@@ -17,18 +17,18 @@ window#waybar {
 
 #workspaces button {
     padding: 0 5px;
+    background: rgba(22, 25, 29, 0.816);
+    color: rgba(171, 178, 191, 0.667);
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.current_output {
     background: rgba(53, 59, 69, 0.816);
     color: rgba(171, 178, 191, 0.667);
     border-bottom: 3px solid transparent;
 }
 
-#workspaces button.visible {
-    background: rgba(53, 59, 69, 0.816);
-    color: rgba(171, 178, 191, 0.667);
-    border-bottom: 3px solid transparent;
-}
-
-#workspaces button.focused {
+#workspaces button.focused.current_output {
     background: rgba(152, 195, 121, 0.941);
     color: rgba(40, 44, 52, 0.667);
     border-bottom: 3px solid white;
@@ -40,12 +40,6 @@ window#waybar {
     border-bottom: 3px solid transparent;
 }
 
-#workspaces button.persistent {
-    padding: 0 5px;
-    background: rgba(22, 25, 29, 0.816);
-    color: rgba(171, 178, 191, 0.667);
-    border-bottom: 3px solid transparent;
-}
 
 #network.disconnected {
     color: rgba(224, 108, 117, 0.941)
