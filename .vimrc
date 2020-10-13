@@ -227,13 +227,15 @@ nnoremap          <leader>SS  :<C-u>SaveSession<CR>
 nnoremap <silent> <leader>SL  :<C-u>FloadSession<CR>
 nnoremap <silent> <leader>SD  :<C-u>FdeleteSession<CR>
 augroup TxtConf
+    autocmd!
     autocmd BufNewFile,BufRead *.txt nnoremap j gj
     autocmd BufNewFile,BufRead *.txt nnoremap k gk
     autocmd BufNewFile,BufRead *.txt vnoremap j gj
     autocmd BufNewFile,BufRead *.txt vnoremap k gk
 augroup END
 augroup MdConf
-    set noexpandtab
+    autocmd!
+    autocmd BufNewFile,BufRead set noexpandtab
     autocmd BufNewFile,BufRead *.md nnoremap j gj
     autocmd BufNewFile,BufRead *.md nnoremap k gk
     autocmd BufNewFile,BufRead *.md vnoremap j gj
