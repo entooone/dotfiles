@@ -1,14 +1,13 @@
-# ==============================
 # Autoloadings
-# ==============================
+#─────────────────────────────
 autoload -Uz add-zsh-hook
 autoload -Uz compinit && compinit -u
 autoload -Uz url-quote-magic
 autoload -Uz vcs_info
 
-# ==============================
+
 # General settings
-# ==============================
+#─────────────────────────────
 setopt auto_cd
 setopt auto_list
 setopt auto_menu
@@ -33,18 +32,18 @@ setopt share_history
 setopt transient_rprompt
 setopt nomultios
 
-# ==============================
+
 # Prompt
-# ==============================
+#─────────────────────────────
 autoload -Uz vcs_info
 precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats '%b'
 setopt PROMPT_SUBST
 export PROMPT=$'\n%F{yellow}%*%F{red} %n@%m%F{green} %~ %F{blue}${vcs_info_msg_0_}\n%F{white}%(!.#.$)%F{white} '
 
-# ==============================
+
 # Exports
-# ==============================
+#─────────────────────────────
 export CLICOLOR=true
 export LSCOLORS='exfxcxdxbxGxDxabagacad'
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
@@ -63,9 +62,9 @@ if type bat &> /dev/null; then
     export FZF_DEFAULT_OPTS='--preview "if [ -d {} ]; then ls -1F --color {}/; else bat --style=numbers --color=always --line-range :500 {}; fi"'
 fi
 
-# ==============================
+
 # Completion
-# ==============================
+#─────────────────────────────
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
@@ -75,18 +74,18 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*:options' description 'yes'
 
-# ==============================
+
 # Key bindings
-# ==============================
+#─────────────────────────────
 bindkey -e
 bindkey "^P" history-beginning-search-backward
 bindkey "^N" history-beginning-search-forward
 bindkey '^]'   vi-find-next-char
 bindkey '^[^]' vi-find-prev-char
 
-# ==============================
+
 # Aliases
-# ==============================
+#─────────────────────────────
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls -FC --color=auto'
@@ -116,9 +115,9 @@ if type "vim" > /dev/null 2>&1; then
     alias vi='vim'
 fi
 
-# ==============================
+
 # Functions
-# ==============================
+#─────────────────────────────
 scd() {
     dir=$(find ${1:-\.} -type d | fzy)
     if [ $? -eq 0 ]; then
@@ -127,16 +126,16 @@ scd() {
     fi
 }
 
-# ==============================
+
 # Linux Brew
-# ==============================
+#─────────────────────────────
 if [ -e "$HOME/.linuxbrew/bin/brew" ]; then
     eval $($HOME/.linuxbrew/bin/brew shellenv)
 fi
 
-# ==============================
+
 # man 
-# ==============================
+#─────────────────────────────
 man() {
     env LESS_TERMCAP_mb=$'\E[01;31m' \
     LESS_TERMCAP_md=$'\E[01;38;5;74m' \
@@ -148,38 +147,38 @@ man() {
     man "$@"
 }
 
-# =============================
+
 # golang
-# =============================
+#─────────────────────────────
 if type "go" > /dev/null 2>&1; then
     export PATH=$PATH:$(go env GOPATH)/bin
 fi
 
-# =============================
+
 # java
-# =============================
+#─────────────────────────────
 export JAVA_HOME=/usr/lib/jvm/default
 export JDK_HOME=/usr/lib/jvm/default
 export PATH=$PATH:$JAVA_HOME/bin
 export JUNIT_HOME=/usr/share/java
 export CLASSPATH=$JUNIT_HOME/junit.jar:$CLASSPATH
 
-# =============================
+
 # Rootless Docker
-# =============================
+#─────────────────────────────
 #export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 
-# ==============================
+
 # local zshrc
-# ==============================
+#─────────────────────────────
 LOCAL_ZSHRC="$HOME/.zsh/zshrc.local"
 if [ -e $LOCAL_ZSHRC ]; then
     source $LOCAL_ZSHRC
 fi
 
-# ==============================
+
 # Load Message
-# ==============================
+#─────────────────────────────
 echo "~/.zshrc loaded"
 
