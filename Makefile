@@ -22,6 +22,11 @@ setup-zsh:
 	ln $(SLINKFLAG) $(DOTFILES)/.zsh ~
 	ln $(SLINKFLAG) $(DOTFILES)/.zshrc ~
 
+.PHONY: setup-bash
+setup-bash:
+	ln $(SLINKFLAG) $(DOTFILES)/.bashrc ~
+
+
 .PHONY: setup-tmux
 setup-tmux:
 	ln $(SLINKFLAG) $(DOTFILES)/.tmux.conf ~
@@ -44,7 +49,7 @@ setup-sway: .config
 	ln $(SLINKFLAG) $(DOTFILES)/.config/waybar $(CONFIGDIR)
 
 .PHONY: setup-cli
-setup-cli: setup-zsh setup-tmux setup-tig setup-vim
+setup-cli: setup-bash setup-zsh setup-tmux setup-tig setup-vim
 
 .PHONY: setup-gui
 setup-gui: setup-alacritty setup-sway
