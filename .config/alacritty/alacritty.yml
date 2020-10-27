@@ -1,0 +1,48 @@
+font:
+  normal:
+    family: Cica
+    style: Regular
+  bold:
+    family: Cica
+    style: Bold
+  italic:
+    family: Cica
+    style: Italic
+  bold_italic:
+    family: Cica
+    style: Bold Italic
+  size: 8
+colors:
+  primary:
+    foreground: '#f8f8f2'
+    background: '#252620'
+  normal:
+    black:   '#272822'
+    red:     '#f92672'
+    green:   '#a6e22e'
+    yellow:  '#f4bf75'
+    blue:    '#66d9ef'
+    magenta: '#ae81ff'
+    cyan:    '#a1efe4'
+    white:   '#f8f8f2'
+  bright:
+    black:   '#75715e'
+    red:     '#f92672'
+    green:   '#a6e22e'
+    yellow:  '#f4bf75'
+    blue:    '#66d9ef'
+    magenta: '#ae81ff'
+    cyan:    '#a1efe4'
+    white:   '#f9f8f5'
+background_opacity: 0.88
+window:
+    padding:
+        x: 4
+        y: 4
+scrolling:
+  history: 100000
+key_bindings:
+  # keycode { 12: "-", 39: ";" }
+  - { key: 12,   mods: Control,       action: DecreaseFontSize }
+  - { key: 12,   mods: Control|Shift, action: ResetFontSize }
+  - { key: 39,   mods: Control|Shift, action: IncreaseFontSize }

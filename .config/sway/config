@@ -12,7 +12,7 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term urxvt
+set $term WINIT_UNIX_BACKEND=x11 alacritty
 set $menu wofi --show drun
 set $browser GDK_BACKEND=wayland firefox
 set $simplenote GDK_BACKEND=x11 simplenote
