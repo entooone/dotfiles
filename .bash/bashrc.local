@@ -1,3 +1,0 @@
-source /usr/share/git/git-prompt.sh
-source /usr/share/fzf/key-bindings.bash
-source /usr/share/fzf/completion.bash
