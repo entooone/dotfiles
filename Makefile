@@ -34,9 +34,9 @@ setup-tig:
 .config:
 	if [ ! -d $(CONFIGDIR) ]; then mkdir $(CONFIGDIR); fi
 
-.PHONY: setup-urxvt
-setup-urxvt:
-	ln $(SLINKFLAG) $(DOTFILES)/.urxvt $(CONFIGDIR)
+.PHONY: setup-alacritty
+setup-alacritty:
+	ln $(SLINKFLAG) $(DOTFILES)/.config/alacritty $(CONFIGDIR)
 
 .PHONY: setup-sway
 setup-sway: .config
@@ -47,5 +47,5 @@ setup-sway: .config
 setup-cli: setup-zsh setup-tmux setup-tig setup-vim
 
 .PHONY: setup-gui
-setup-gui: setup-urxvt setup-sway
+setup-gui: setup-alacritty setup-sway
 
