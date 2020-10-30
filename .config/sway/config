@@ -68,6 +68,9 @@ input type:touchpad {
     tap enabled
     natural_scroll enabled
 }
+input type:pointer {
+    pointer_accel -0.5
+}
 #
 # Example configuration:
 #
@@ -175,7 +178,7 @@ input type:touchpad {
     bindsym $mod+v splitv
     bindsym $mod+w layout tabbed
     bindsym $mod+e layout toggle split
-    bindsym $mod+f fullscreen
+    #bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
