@@ -11,7 +11,7 @@ font:
   bold_italic:
     family: Cica
     style: Bold Italic
-  size: 8
+  size: 12
 colors:
   primary:
     foreground: '#f8f8f2'
