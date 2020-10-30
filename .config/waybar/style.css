@@ -28,6 +28,18 @@ window#waybar {
     border-bottom: 3px solid transparent;
 }
 
+#workspaces button:not(.persistent):not(.current_output) {
+    background: rgba(22, 25, 29, 0.816);
+    color: rgba(22, 25, 29, 0.816);
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.visible.current_output {
+    background: rgba(152, 195, 121, 0.941);
+    color: rgba(40, 44, 52, 0.667);
+    border-bottom: 3px solid transparent;
+}
+
 #workspaces button.focused.current_output {
     background: rgba(152, 195, 121, 0.941);
     color: rgba(40, 44, 52, 0.667);
