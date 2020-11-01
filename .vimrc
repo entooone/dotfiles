@@ -168,6 +168,7 @@ let g:EasyMotion_smartcase = 1
 "─────────────────────────────
 let g:asyncomplete_auto_popup = 0
 
+
 " fzf
 "─────────────────────────────
 let g:fzf_preview_window = 'right:60%'
