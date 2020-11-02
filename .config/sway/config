@@ -69,7 +69,7 @@ input type:touchpad {
     natural_scroll enabled
 }
 input type:pointer {
-    pointer_accel -0.5
+    pointer_accel -0.6
 }
 #
 # Example configuration:
