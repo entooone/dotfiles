@@ -1,0 +1,31 @@
+snippet     go
+abbr        run build test clean
+options     head
+    APP=${0:APP_NAME}
+
+    GO=go
+    GORUN=$(GO) run
+    GOBUILD=$(GO) build
+    GOTEST=$(GO) test -v
+    RM=rm -f
+
+    CMD=./cmd
+    GOFILES=$(shell find . -type f -name '*.go')
+
+    $(APP): $(GOFILES)
+        $(GOBUILD) $(CMD)/$(APP)
+
+    .PHONY: run
+    run: build
+        ./$(APP)
+
+    .PHONY: build
+    build: $(APP)
+
+    .PHONY: test
+    test:
+        $(GOTEST) ./...
+
+    .PHONY: clean
+    clean:
+        $(RM) ./$(APP)

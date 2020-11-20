@@ -75,14 +75,22 @@ abbr    return ...
 options head
     `g:GoReturn()`
 
+snippet bi
+abbr    big.NewInt(N)
+    big.NewInt(${1:N})
+
 snippet test
 abbr    func Test... (t *testing.T) {
 options head
   func Test${1:fname}(t *testing.T) {
 	t.Parallel()
-	tests := map[string]struct {${2:struct}}{${3:data}}
-    for name, test := range tests {
-        test := test
+	tests := map[string]struct {
+        ${2:struct}
+    }{
+        ${3:data}
+    }
+    for name, tc := range tests {
+        tc := tc
         t.Run(name, func(t *testing.T) {
             t.Parallel()
             ${0:TARGET}
@@ -90,3 +98,7 @@ options head
     }
   }
 
+snippet     tef
+abbr        t.Errorf(...)
+options     head
+    t.Errorf("%s (got: %v, want: %v)", name, ${1:got}, ${2:want})
