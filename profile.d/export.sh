@@ -6,6 +6,7 @@ export BROWSER=/usr/bin/firefox
 export SCREENDIR=$HOME/.screen
 export TERM=xterm-256color
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/local/bin
 export PATH=$PATH:$HOME/dotfiles/bin
 export FZF_DEFAULT_COMMAND='find . | grep -v -E ".git"'
 export FZF_DEFAULT_OPTS='--preview "if [ -d {} ]; then ls -1F --color {}/; else cat {}; fi"'
