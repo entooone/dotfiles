@@ -31,5 +31,5 @@ else
   fi  
   echo -e "## $(date '+%Y%m%d %H:%M:%S')\n\n" >> $filepath
   
-  vim + $filepath
+  (cd $memodir && vim + $filepath)
 fi
