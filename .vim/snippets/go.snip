@@ -102,3 +102,22 @@ snippet     tef
 abbr        t.Errorf(...)
 options     head
     t.Errorf("%s (got: %v, want: %v)", name, ${1:got}, ${2:want})
+
+snippet     reverse
+alias       rev
+abbr        reveres slice
+options     head
+	${1:dst} := make([]${2:TYPE}, len(${3:src}))
+	copy($1, $3)
+	for i := 0; i < len($1)/2; i++ {
+		$1[i], $1[len($1)-i-1] = $1[len($1)-i-1], $1[i]
+	}
+
+snippet     open
+abbr        os.Open(...)
+options     head
+    f, err := os.Open(${1:FILE})
+    if err != nil {
+        ${2:ERROR}
+    }
+    defer f.Close()
