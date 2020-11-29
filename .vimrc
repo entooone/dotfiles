@@ -224,6 +224,7 @@ nnoremap <silent> <leader>t   :<C-u>terminal<CR>
 nnoremap <silent> <leader>f   :<C-u>Files<CR>
 nnoremap <silent> <leader>d   :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p   :<C-u>LspDocumentDiagnostics<CR>
+nnoremap <silent> <leader>w   :<C-u>LspDocumentSymbol<CR>
 nnoremap          <leader>SS  :<C-u>SaveSession<CR>
 nnoremap <silent> <leader>SL  :<C-u>FloadSession<CR>
 nnoremap <silent> <leader>SD  :<C-u>FdeleteSession<CR>
