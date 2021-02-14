@@ -8,7 +8,8 @@ set $up k
 set $right l
 set $term WINIT_UNIX_BACKEND=x11 alacritty
 set $menu wofi --show drun
-set $browser GDK_BACKEND=wayland firefox
+# set $browser GDK_BACKEND=wayland firefox
+set $browser chromium
 set $simplenote GDK_BACKEND=x11 simplenote
 set $ws1  "1"
 set $ws2  "2"
@@ -28,7 +29,7 @@ output eDP-1 pos     0,0 scale 1.5
 output  DP-1 pos -3000,0
 output  DP-2 pos  3000,0
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ~/Pictures/wallpaper2.jpg fill
+output * bg ~/Pictures/wallpaper5.jpg fill
 
 # Example configuration:
 #
@@ -66,6 +67,7 @@ input type:touchpad {
 }
 input type:pointer {
     pointer_accel -0.6
+    natural_scroll disabled
 }
 
 # Example configuration:
