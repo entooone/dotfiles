@@ -29,12 +29,12 @@ options head
     import (
     	"log"
     
-    	"github.com/hajimehoshi/ebiten"
+    	"github.com/hajimehoshi/ebiten/v2"
     )
     
     type Game struct{}
     
-    func (g *Game) Update(screen *ebiten.Image) error {
+    func (g *Game) Update() error {
     	return nil
     }
     
@@ -90,7 +90,7 @@ options head
         ${3:data}
     }
     for name, tc := range tests {
-        tc := tc
+        name, tc := name, tc
         t.Run(name, func(t *testing.T) {
             t.Parallel()
             ${0:TARGET}
@@ -102,6 +102,11 @@ snippet     tef
 abbr        t.Errorf(...)
 options     head
     t.Errorf("%s (got: %v, want: %v)", name, ${1:got}, ${2:want})
+
+snippet     lf
+abbr        t.Errorf(...)
+options     head
+    log.Fatal(err)
 
 snippet     reverse
 alias       rev
@@ -121,3 +126,17 @@ options     head
         ${2:ERROR}
     }
     defer f.Close()
+
+snippet     fori
+abbr        for i := 0; i < 10; i++ {...
+options     head
+    for ${1:i} := ${2:0}; $1 < ${3:LOOP}; $1++ {
+        ${0:TARGET}
+    }
+
+snippet     forr
+abbr        for i, v := range SLICE {...
+options     head
+    for ${1:i}, ${2:v} := range ${3:SLICE} {
+        ${0:TARGET}
+    }
