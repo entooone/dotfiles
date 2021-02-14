@@ -11,4 +11,9 @@ syn match goPointerOperator   /\*/ nextgroup=goReceiverType contained skipwhite 
 syn match goFunction          /\w\+/ nextgroup=goSimpleParams contained skipwhite skipnl
 syn match goReceiverType      /\w\+/ contained
 syn match goReceiver          /(\s*\w\+\%(\s\+\*\?\s*\w\+\)\?\s*)\ze\s*\w/ contained nextgroup=goFunction contains=goReceiverVar skipwhite skipnl
-hi def link goFunction Function
+hi def link goPointerOperator goOperator
+hi def link goFunction  Function
+
+syn match   goHexadecimalInt "\<0x[0-9a-fA-F_]*\x\>"
+syn match   goBinaryInt      "\<0b[01_]*[01]\>"
+hi def link goBinaryInt      Number
