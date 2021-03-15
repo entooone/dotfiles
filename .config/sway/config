@@ -295,6 +295,6 @@ include /etc/sway/config.d/*
 #─────────────────────────────
 exec fcitx-autostart
 exec ~/.config/waybar/launch.sh
-exec gammastep-indicator
+exec gammastep-indicator -l 35:139
 exec dropbox
 xwayland enable
