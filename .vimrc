@@ -125,6 +125,8 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'junegunn/fzf.vim'
 Plug 'mattn/vim-goimports'
+Plug 'mattn/vim-goimpl'
+Plug 'hashivim/vim-terraform'
 call plug#end()
 
 
@@ -281,6 +283,10 @@ let g:asyncomplete_auto_popup = 0
 "─────────────────────────────
 let g:fzf_preview_window = 'right:60%'
 
+
+" vim-terraform
+"─────────────────────────────
+let g:terraform_fmt_on_save = 1
 
 " session
 "─────────────────────────────
