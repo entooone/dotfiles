@@ -4,3 +4,4 @@ bind generic F ?git fetch %(remote)
 bind generic U ?git pull %(remote)
 bind refs    P ?git push -u %(remote) %(tag)
 bind generic P ?git push -u %(remote) %(repo:head)
+bind status  C !git commit -v
