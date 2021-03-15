@@ -6,6 +6,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 alias c='cd'
+alias g='git'
 alias po='popd'
 alias pu='pushd'
 alias l='ls'
@@ -26,3 +27,4 @@ alias dc="docker-compose"
 if type "vim" > /dev/null 2>&1; then
     alias vi='vim'
 fi
+alias code="code -n"
