@@ -26,7 +26,7 @@ set fileformats=unix,dos,mac
 set ambiwidth=single
 set conceallevel=0
 set splitbelow
-set noruler
+set ruler
 set nonumber
 set noshowcmd
 set noshowmode
