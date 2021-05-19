@@ -46,11 +46,11 @@ options head
     }
 
     func main() {
-    	game := &Game{}
+    	g := &Game{}
     	ebiten.SetWindowSize(640, 480)
     	ebiten.SetWindowTitle("Your game's title")
     
-    	if err := ebiten.RunGame(game); err != nil {
+    	if err := ebiten.RunGame(g); err != nil {
     		log.Fatal(err)
     	}
     }
@@ -140,3 +140,10 @@ options     head
     for ${1:i}, ${2:v} := range ${3:SLICE} {
         ${0:TARGET}
     }
+
+
+snippet     embed
+abbr        //go:embed
+options     head
+    //go:embed ${1:FILE}
+    var ${2:VAR} []byte
