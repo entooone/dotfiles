@@ -104,13 +104,6 @@ let g:Netrw_UserMaps = [
 \   ['<C-l>', 'NetrwMapping_gt'],
 \ ]
 
-" termdebug
-"─────────────────────────────
-"packadd termdebug
-"func s:StartDebugDelve(bang, ...)
-"  call s:StartDebugDelve_internal({'dlv_args': a:000, 'bang': a:bang})
-"endfunc
-
 
 " Plugin
 "─────────────────────────────
@@ -127,6 +120,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'mattn/vim-goimports'
 Plug 'mattn/vim-goimpl'
 Plug 'hashivim/vim-terraform'
+Plug 'cespare/vim-toml'
 call plug#end()
 
 
