@@ -6,8 +6,8 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term WINIT_UNIX_BACKEND=x11 alacritty
-set $menu wofi --show drun
+set $term WINIT_UNIX_BACKEND=x11 GDK_BACKEND=x11 alacritty
+set $menu wofi --show drun -I -a
 # set $browser GDK_BACKEND=wayland firefox
 set $browser chromium
 set $simplenote GDK_BACKEND=x11 simplenote
@@ -26,8 +26,9 @@ set $ws10 "10"
 # Output configuration
 #─────────────────────────────
 output eDP-1 pos     0,0 scale 1.5
-output  DP-1 pos -3000,0
-output  DP-2 pos  3000,0
+#output  DP-1 pos -3000,0
+output  DP-2
+#pos  3000,0
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output * bg ~/Pictures/wallpaper5.jpg fill
 
@@ -65,8 +66,12 @@ input type:touchpad {
     tap enabled
     natural_scroll enabled
 }
-input type:pointer {
+input type:Touchpad {
     pointer_accel -0.6
+    natural_scroll disabled
+}
+input type:Mouse {
+    pointer_accel 1
     natural_scroll disabled
 }
 
@@ -291,10 +296,22 @@ smart_borders on
 include /etc/sway/config.d/*
 
 
+# GTK 
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+    gsettings set $gnome-schema gtk-theme 'Adwaita'
+    gsettings set $gnome-schema icon-theme 'Papirus'
+    gsettings set $gnome-schema cursor-theme 'Adwaita'
+    gsettings set $gnome-schema font-name 'Adwaita'
+}
+
+
 # Auto start
 #─────────────────────────────
+for_window [shell=".*"] title_format "%title :: %shell"
 exec fcitx-autostart
 exec ~/.config/waybar/launch.sh
 exec gammastep-indicator -l 35:139
 exec dropbox
+exec mako
 xwayland enable
