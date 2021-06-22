@@ -104,9 +104,14 @@ options     head
     t.Errorf("%s (got: %v, want: %v)", name, ${1:got}, ${2:want})
 
 snippet     lf
-abbr        t.Errorf(...)
+abbr        log.Fatal
 options     head
     log.Fatal(err)
+
+snippet     lp
+abbr        log.Println
+options     head
+    log.Println(err)
 
 snippet     reverse
 alias       rev
@@ -147,3 +152,14 @@ abbr        //go:embed
 options     head
     //go:embed ${1:FILE}
     var ${2:VAR} []byte
+
+snippet     new
+abbr        func NewXXX() {}
+options     head
+    func New${1:STRUCT}(${2:args}) ${3:*}$1 {
+        ${0:TARGET}
+    }
+
+snippet     xml
+abbr        `xml:"..."`
+    \`xml:"${1:VALUE}"\`
