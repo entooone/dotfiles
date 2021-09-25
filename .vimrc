@@ -80,11 +80,14 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
-Plug 'junegunn/fzf.vim'
 Plug 'mattn/vim-goimports'
 Plug 'mattn/vim-goimpl'
 Plug 'hashivim/vim-terraform'
 Plug 'cespare/vim-toml'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mattn/ctrlp-matchfuzzy'
+Plug 'mattn/vim-maketable'
+Plug 'koron/codic-vim'
 call plug#end()
 
 
@@ -190,6 +193,7 @@ endfunction
 command! ToUpperCase call s:fast_rename(substitute(expand("<cword>"), "^.", "\\U&", "g"))
 command! ToLowerCase call s:fast_rename(substitute(expand("<cword>"), "^.", "\\L&", "g"))
 
+
 " neosnippet
 "─────────────────────────────
 let g:neosnippet#snippets_directory='~/.vim/snippets'
@@ -237,41 +241,17 @@ let g:EasyMotion_smartcase = 1
 let g:asyncomplete_auto_popup = 0
 
 
-" fzf
-"─────────────────────────────
-let g:fzf_preview_window = 'right:60%'
-
-
 " vim-terraform
 "─────────────────────────────
 let g:terraform_fmt_on_save = 1
 
-" session
+
+" ctrlp
 "─────────────────────────────
-let s:session_path = expand('~/.vim/sessions')
-if !isdirectory(s:session_path)
-    call mkdir(s:session_path, "p")
-endif
-func! s:saveSession(file) abort
-    execute 'silent mksession!' s:session_path . '/' . a:file
-endfunc
-func! s:loadSession(file) abort
-    execute 'silent source' a:file
-endfunc
-func! s:deleteSession(file) abort
-    call delete(expand(a:file))
-endfunc
-command! -nargs=0 SaveSession call s:saveSession(substitute(expand('%:p:h'), '/', '_', 'g'))
-command! FloadSession call fzf#run({
-\  'source': split(glob(s:session_path . "/*"), "\n"),
-\  'sink':    function('s:loadSession'),
-\  'options': '-m -x +s',
-\  'down':    '40%'})
-command! FdeleteSession call fzf#run({
-\  'source': split(glob(s:session_path . "/*"), "\n"),
-\  'sink':    function('s:deleteSession'),
-\  'options': '-m -x +s',
-\  'down':    '40%'})
+let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
+let g:ctrlp_map = '<leader>f'
+let g:ctrlp_cmd = 'CtrlP .'
+let g:ctrlp_show_hidden = 1
 
 
 " keymap
@@ -291,20 +271,29 @@ nmap              <leader>m   <Plug>(easymotion-overwin-f)
 nmap     <buffer> <leader>n   <plug>(lsp-references)
 nnoremap <silent> <leader>R   :<C-u>source ~/.vimrc<CR>
 nnoremap <silent> <leader>g   :<C-u>terminal ++close tig<CR>
-nnoremap <silent> <leader>b   :<C-u>execute('terminal ++close tig blame +' . line('.') . ' ' . expand('%:p'))<CR>
-nnoremap <silent> <leader>e   :<C-u>Se<CR>
+nnoremap <silent> <leader>b   :<C-u>CtrlPBuffer<CR>
+"nnoremap <silent> <leader>b   :<C-u>execute('terminal ++close tig blame +' . line('.') . ' ' . expand('%:p'))<CR>
+nnoremap <silent> <leader>e   :<C-u>Texplore<CR>
 nnoremap <silent> <leader>t   :<C-u>terminal<CR>
-nnoremap <silent> <leader>f   :<C-u>Files<CR>
 nnoremap <silent> <leader>h   :<C-u>LspHover<CR>
 nnoremap <silent> <leader>d   :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p   :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <silent> <leader>w   :<C-u>LspDocumentSymbol<CR>
 nnoremap <silent> <leader>r   :<C-u>LspReferences<CR>
 nnoremap          <leader>SS  :<C-u>SaveSession<CR>
-nnoremap <silent> <leader>SL  :<C-u>FloadSession<CR>
-nnoremap <silent> <leader>SD  :<C-u>FdeleteSession<CR>
+nnoremap <silent> <leader>SL  :<C-u>CtrlPLoadSession<CR>
+nnoremap <silent> <leader>SD  :<C-u>CtrlPDeleteSession<CR>
 nnoremap <silent> <leader>U   :<C-u>ToUpperCase<CR>
 nnoremap <silent> <leader>u   :<C-u>ToLowerCase<CR>
+cnoremap <C-A> <Home>
+cnoremap <C-F> <Right>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <M-B> <S-Left>
+cnoremap <M-J> <S-Right>
+
+" automatic commands
+"─────────────────────────────
 augroup TxtConf
     autocmd!
     autocmd BufNewFile,BufRead *.txt nnoremap j gj
@@ -319,4 +308,15 @@ augroup MdConf
     autocmd BufNewFile,BufRead *.md nnoremap k gk
     autocmd BufNewFile,BufRead *.md vnoremap j gj
     autocmd BufNewFile,BufRead *.md vnoremap k gk
+augroup END
+augroup TEXConf
+    autocmd!
+    autocmd BufWritePre *.tex :%s/、/，/ge
+    autocmd BufWritePre *.tex :%s/。/．/ge
+    autocmd BufNewFile,BufRead *.tex set wrap
+    autocmd BufNewFile,BufRead *.tex nnoremap j gj
+    autocmd BufNewFile,BufRead *.tex nnoremap k gk
+    autocmd BufNewFile,BufRead *.tex vnoremap j gj
+    autocmd BufNewFile,BufRead *.tex vnoremap k gk
+    autocmd BufNewFile,BufRead *.tex inoremap ; \
 augroup END
