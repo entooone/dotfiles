@@ -8,7 +8,6 @@ update-gotools:
 	go install golang.org/x/tools/gopls@latest
 	go install github.com/go-delve/delve/cmd/dlv@latest
 	go install github.com/110y/goreturn@latest
-	go install github.com/josharian/impl@latest
 
 .PHONY: setup-vim
 setup-vim:
