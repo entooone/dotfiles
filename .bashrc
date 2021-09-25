@@ -25,6 +25,16 @@ shopt -s autocd
 shopt -s histappend
 
 
+# completion
+#─────────────────────────────
+if ! declare -f __git_complete &> /dev/null; then
+    BASH_COMPLETION_DIR=$(pkg-config --variable=completionsdir bash-completion 2>/dev/null) \
+    || BASH_COMPLETION_DIR='/usr/share/bash-completion/completions/'
+    source $BASH_COMPLETION_DIR/git
+fi
+__git_complete g __git_main
+
+
 # Prompt
 #─────────────────────────────
 __prompt_git() {
@@ -40,20 +50,9 @@ export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\h \[\033[33m\]\w \[\033[34m\]\$(__p
 export HISTFILE=$HOME/.bash_history
 
 
-# completion
-#─────────────────────────────
-if ! declare -f __git_complete &> /dev/null; then
-    BASH_COMPLETION_DIR=$(pkg-config --variable=completionsdir bash-completion 2>/dev/null) \
-    || BASH_COMPLETION_DIR='/usr/share/bash-completion/completions/'
-    source $BASH_COMPLETION_DIR/git
-fi
-__git_complete g __git_main
-
-
 # cd
 #─────────────────────────────
-eval "$(go-cd init)"
-
+source <(go-cd init)
 
 # key binding
 #─────────────────────────────
