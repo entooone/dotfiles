@@ -9,10 +9,7 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/local/bin
 export PATH=$PATH:$HOME/dotfiles/bin
 export FZF_DEFAULT_COMMAND='find . | grep -v -E ".git"'
-export FZF_DEFAULT_OPTS='--preview "if [ -d {} ]; then ls -1F --color {}/; else cat {}; fi"'
-if type bat &> /dev/null; then
-    export FZF_DEFAULT_OPTS='--preview "if [ -d {} ]; then ls -1F --color {}/; else bat --style=numbers --color=always --line-range :500 {}; fi"'
-fi
+export FZF_DEFAULT_OPTS='--reverse --height 40%'
 
 # deno
 #─────────────────────────────
