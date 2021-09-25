@@ -47,4 +47,4 @@ keycode  55 = v V v V
 keycode  56 = b B b B
 keycode  57 = n N n N
 keycode  58 = m M m M
-
+keycode 123 = backslash underscore
