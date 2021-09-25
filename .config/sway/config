@@ -107,6 +107,8 @@ input type:Mouse {
 
     # Reload the configuration file
     bindsym $mod+Shift+r reload
+
+    bindsym $mod+a focus parent
 #
 # Moving around:
 #
