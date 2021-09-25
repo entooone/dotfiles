@@ -1,0 +1,41 @@
+snippet     ctrlp
+abbr        ctrlp
+options     head
+    if exists('g:loaded_ctrlp_${1:FILEBASE}') && g:loaded_ctrlp_$1
+      finish
+    endif
+    let g:loaded_ctrlp_$1 = 1
+    let s:save_cpo = &cpo
+    set cpo&vim
+     
+    let s:ctrlp_builtins = ctrlp#getvar('g:ctrlp_builtins')
+    let g:ctrlp_ext_vars = add(get(g:, 'ctrlp_ext_vars', []), {
+          \ 'init': 'ctrlp#$1#init()',
+          \ 'accept': 'ctrlp#$1#accept',
+          \ 'lname': '$1',
+          \ 'sname': '$1',
+          \ 'type': 'line',
+          \ 'nolim': 1
+          \})
+    let s:id = s:ctrlp_builtins + len(g:ctrlp_ext_vars)
+    unlet s:ctrlp_builtins
+
+
+    function! ctrlp#$1#id() abort
+      return s:id
+    endfunction
+     
+    function! ctrlp#$1#init() abort
+      " Gather candidates
+      let candidates = []
+      return candidates
+    endfunction
+     
+    function! ctrlp#$1#accept(mode, str) abort
+      call ctrlp#exit()
+      " Write actions
+    endfunction
+     
+    let &cpo = s:save_cpo
+    unlet s:save_cpo
+    " vim:ts=2:sw=2:sts=2
