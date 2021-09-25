@@ -53,44 +53,8 @@ endif
 func! MakeStatusLine() abort
     return repeat('─', winwidth(0))
 endfunc
-
-func! s:tabpage_label(n) abort
-    let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
-    let bufnrs = tabpagebuflist(a:n)
-    let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, "&modified")')) ? '*' : ''
-    let sp = ' '
-    let current = bufnrs[tabpagewinnr(a:n) - 1]
-    let fname = fnamemodify(bufname(current), ":t")
-    let label = a:n . sp . fname . mod
-    let label = a:n is tabpagenr() ? '[' . label . ']' : sp . label . sp
-    return '%' . a:n . 'T' . hi . label . '%T%#TabLineFill#'
-endfunc
-
-func! s:get_git_branch() abort
-    let branch = system('git symbolic-ref --short HEAD')
-    if v:shell_error != 0
-        return ''
-    endif
-    return strpart(branch, 0, strlen(branch)-1)
-endfunc
-
-func! s:get_project_name() abort
-    return fnamemodify(getcwd(), ":t")
-endfunc
-
-func! MakeTabLine() abort
-    let titles = map(range(1, tabpagenr('$')), 's:tabpage_label(v:val)')
-    let sep = ''
-    let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-    let branch = s:get_git_branch()
-    let projectPath = s:get_project_name()
-    let info = '%#ProjectPath#' . projectPath . ' ' . '%#GitBranch#' . branch
-    return  tabpages .  '%=' . info
-endfunc
-
 set fillchars+=vert:\│
 set statusline=%!MakeStatusLine()
-set tabline=%!MakeTabLine()
 
 
 " netrw
