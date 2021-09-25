@@ -7,8 +7,18 @@ abbr    main
 options head
     package main
 
-    func main() {
+    import "log"
+
+    func run() error {
         ${0:TARGET}
+
+        return nil
+    }
+
+    func main() {
+        if err := run(); err != nil {
+            log.Fatal(err)
+        }
     }
 
 snippet gen
@@ -98,6 +108,16 @@ options head
     }
   }
 
+snippet     bench
+abbr        bench
+options     head
+  func Benchmark${1:fname}(b *testing.B) {
+	# PreTask
+    b.ResetTimer()
+    # Tast
+    ${0:TARGET}
+  }
+
 snippet     tef
 abbr        t.Errorf(...)
 options     head
@@ -163,3 +183,46 @@ options     head
 snippet     xml
 abbr        `xml:"..."`
     \`xml:"${1:VALUE}"\`
+
+
+
+snippet     sort
+abbr        sort
+options     head
+    type ${1:STRUCT} struct{}
+
+    func (s ${2:*}$1) Len() int {
+        return len(s)
+    }
+
+    func (s $2$1) Less(i int, j int) bool {
+        
+    }
+
+    func (s $2$1) Swap(i int, j int) {
+        s[i], s[j] = s[j], s[i]
+    }
+
+snippet     string
+abbr        string
+options     head
+    func (${1:SHORT} ${2:TYPE}) String() string {
+        return fmt.Sprintln(${3:FORMAT})
+    }
+
+snippet     binary_search
+abbr        binary_search
+options     head
+    func binary_search() {
+        left := -1
+        right := l + 1
+        for right-left > 1 {
+            mid := left + (right-left)/2
+            if ${1:FUNC()} {
+                left = mid
+            } else {
+                right = mid
+            }
+        }
+        return left
+    }
