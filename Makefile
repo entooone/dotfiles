@@ -5,9 +5,10 @@ SLINKFLAG := -sf
 
 .PHONY: update-gotools
 update-gotools:
-	go install golang.org/x/tools/gopls@latest
-	go install github.com/go-delve/delve/cmd/dlv@latest
-	go install github.com/110y/goreturn@latest
+	go install -v golang.org/x/tools/cmd/goimports@latest
+	go install -v golang.org/x/tools/gopls@latest
+	go install -v github.com/go-delve/delve/cmd/dlv@latest
+	go install -v github.com/110y/goreturn@latest
 
 .PHONY: setup-vim
 setup-vim:
