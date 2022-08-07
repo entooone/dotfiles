@@ -12,30 +12,32 @@ local colors = {
     cursor_fg  = "#252620",
     cursor_bg  = "#a6e22e",
     ansi = {
-        "#272822", --black:  
-        "#f92672", --red:    
-        "#a6e22e", --green:  
-        "#f4bf75", --yellow: 
-        "#66d9ef", --blue:   
-        "#ae81ff", --magenta:
-        "#a1efe4", --cyan:   
-        "#f8f8f2", --white:  
+        "#272822", --black
+        "#f92672", --red
+        "#a6e22e", --green
+        "#f4bf75", --yellow
+        "#66d9ef", --blue
+        "#ae81ff", --magenta
+        "#a1efe4", --cyan
+        "#f8f8f2", --white
     },
     brights = {
-        "#75715e", --black:  
-        "#f92672", --red:    
-        "#a6e22e", --green:  
-        "#f4bf75", --yellow: 
-        "#66d9ef", --blue:   
-        "#ae81ff", --magenta:
-        "#a1efe4", --cyan:   
-        "#f9f8f5", --white:  
+        "#75715e", --black
+        "#f92672", --red
+        "#a6e22e", --green
+        "#f4bf75", --yellow
+        "#66d9ef", --blue
+        "#ae81ff", --magenta
+        "#a1efe4", --cyan
+        "#f9f8f5", --white
     },
 }
 
 return {
+    initial_cols = 145,
+    initial_rows = 55,
     use_ime = true,
-    font_size = 10.0,
+    font_size = 14.0,
     window_background_opacity = 0.95,
     font = wezterm.font("Cica"),
     colors = colors,
@@ -58,7 +60,29 @@ return {
             action="OpenLinkAtMouseCursor",
         },
     },
+    keys = {
+        -- This will create a new split and run your default program inside it
+        {
+            key="\"", 
+            mods="CTRL|SHIFT|ALT", 
+            action=wezterm.action{
+                SplitVertical={
+                    domain="CurrentPaneDomain"
+                }
+            }
+        },
+        {
+            key="h", 
+            mods="CTRL", 
+            action=wezterm.action{
+                SendKey={
+                    key="Backspace",
+                }
+            }
+        },
+    },
     scrollback_lines = 10000,
     -- tab_bar_at_bottom = true,
-    canonicalize_pasted_newlines = false,
+    canonicalize_pasted_newlines = "None",
+    debug_key_events = true,
 }
