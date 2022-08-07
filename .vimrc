@@ -37,7 +37,14 @@ set laststatus=0
 if !has('gui_running')
     set t_Co=256
 endif
+set noswapfile
 
+"
+" Windows
+"─────────────────────────────
+if has('win32')
+    set runtimepath^=~/.vim/
+endif
 
 " Cursor
 "─────────────────────────────
@@ -88,7 +95,15 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mattn/ctrlp-matchfuzzy'
 Plug 'mattn/vim-maketable'
 Plug 'koron/codic-vim'
+Plug 'ziglang/zig.vim'
 call plug#end()
+
+
+" lsp-settings
+"─────────────────────────────
+if has('win32') || has('win64')
+    let g:lsp_settings_servers_dir = expand('$HOMEPATH/.local/share/vim-lsp-settings/servers')
+endif
 
 
 " lsp
@@ -318,5 +333,5 @@ augroup TEXConf
     autocmd BufNewFile,BufRead *.tex nnoremap k gk
     autocmd BufNewFile,BufRead *.tex vnoremap j gj
     autocmd BufNewFile,BufRead *.tex vnoremap k gk
-    autocmd BufNewFile,BufRead *.tex inoremap ; \
+    "autocmd BufNewFile,BufRead *.tex inoremap ; \
 augroup END
