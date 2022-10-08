@@ -1,9 +1,25 @@
 local wezterm = require 'wezterm';
 
 local default_prog;
+local launch_menu;
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-    default_prog = {"cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l"}
+    local run_bash = {"cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l"}
+    default_prog = run_bash;
+    launch_menu = {
+        {
+            label = "Bash",
+            args = run_bash,
+        },
+        {
+            label = "CMD",
+            args = { "cmd.exe" },
+        },
+        {
+            label = "PowerShell",
+            args = { "powershell.exe" },
+        },
+    };
 end
 
 local colors = {
@@ -31,15 +47,27 @@ local colors = {
         "#a1efe4", --cyan
         "#f9f8f5", --white
     },
+    -- tab_bar = {
+    --     background = "#ff0000",
+    --     active_tab = {
+    --         bg_color = "#ff0000",
+    --         fg_color = "#ffffff",
+    --     },
+    -- },
 }
 
 return {
+    window_frame = {
+        font_size = 10.0,
+    },
+    launch_menu = launch_menu,
     initial_cols = 145,
     initial_rows = 55,
     use_ime = true,
     font_size = 14.0,
     window_background_opacity = 0.95,
     font = wezterm.font("Cica"),
+    window_decorations = "NONE|RESIZE",
     colors = colors,
     default_prog = default_prog,
     adjust_window_size_when_changing_font_size = false,
@@ -61,7 +89,6 @@ return {
         },
     },
     keys = {
-        -- This will create a new split and run your default program inside it
         {
             key="\"", 
             mods="CTRL|SHIFT|ALT", 
@@ -79,6 +106,11 @@ return {
                     key="Backspace",
                 }
             }
+        },
+        {
+            key="w", 
+            mods="SHIFT|ALT", 
+            action=wezterm.action.ShowTabNavigator,
         },
     },
     scrollback_lines = 10000,
