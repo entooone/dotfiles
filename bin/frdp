@@ -1,6 +1,6 @@
 #!/bin/bash
 
 RDP_PATH="$HOME/rdp"
-TARGET_FILE=$(find ${RDP_PATH} -type f | xargs basename | fzf --preview="cat {}")
+TARGET_FILE=$(for f in $(find ${RDP_PATH} -type f); do basename $f; done | fzf --preview="cat ${RDP_PATH}/{}")
 
 start ${RDP_PATH}/${TARGET_FILE}
