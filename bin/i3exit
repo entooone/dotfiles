@@ -1,0 +1,31 @@
+#!/bin/sh
+
+[ "$(cat /proc/1/comm)" = "systemd" ] && logind=systemctl || logind=loginctl
+
+lockcmd="i3lock -f"
+
+case "$1" in
+    lock)
+        $lockcmd
+        ;;
+    logout)
+        i3-msg exit
+        ;;
+    suspend)
+        $lockcmd && $logind suspend
+        ;;
+    hibernate)
+        $lockcmd && $logind hibernate
+        ;;
+    reboot)
+        $logind reboot
+        ;;
+    shutdown)
+        $logind poweroff
+        ;;
+    *)
+        echo "$0: missing or invalid argument"
+        exit 2
+esac
+
+exit 0
