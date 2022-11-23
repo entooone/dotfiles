@@ -11,8 +11,7 @@ blue   = #61afef
 purple = #c678dd
 teal   = #56b6c2
 white  = #ffffff
-
-t_mono0  = #aa282c34
+t_mono0  = #f0282c34
 t_mono1  = #aa545862
 t_mono2  = #aaabb2bf
 t_mono3  = #aac8ccd4
@@ -22,121 +21,95 @@ t_green  = #f098c379
 t_yellow = #aae5c07b
 t_blue   = #aa61afef
 t_purple = #aac678dd
-t_teal   = #aa56b6c2
 t_white  = #aaffffff
 
 
 [bar/statusbar]
-monitor = ${env:MONITOR:eDP1}
+monitor = ${env:MONITOR:eDP-1}
 bottom = false
-
 width = 100%
-height = 32
+height = 28
 fixed-center = false
-
 background = ${colors.t_mono0}
-;background = ${colors.mono0}
 foreground = ${colors.white}
-
 line-size = 3
 line-color = #f00
-
 border-size = 0
 border-color = #00282c34
-
 padding-left = 1
 padding-right = 1
-
 module-margin-left = 1
 module-margin-right = 1
-
-font-0 = Cica:pixelsize=18; 2
+font-0 = Cica:pixelsize=16; 2
 font-1 = Font Awesome 5 Free:style=Solid:pixelsize=12; 2
 font-2 = Font Awesome 5 Free:style=Regular:pixelsize=12; 2
 font-3 = Font Awesome 5 Brands:pixelsize=12; 2
 font-4 = Font Awesome 5 Free:style=Solid:pixelsize=10; 2
-
 modules-left = i3 xwindow
-;modules-center = xwindow
-modules-right = volume cpu memory wlan date battery
-;modules-left = i3 add_ws
-;modules-center = ncmpcpp mpd
-;modules-right = bluetooth update network memory battery volume date
-
+modules-right = pulseaudio backlight cpu memory wired-network wireless-network date battery
 separator = 
 dim-value = 1.0
-
 tray-position = right
 tray-padding = 2
-; tray-detached = false
-; tray-maxsize = 16
-; tray-foreground = ${colors.green}
-; tray-background = ${colors.mono0}
-; 
-;wm-restack = i3
-;override-redirect = true
+tray-maxsize = 24
+tray-background = ${colors.t_mono0}
+tray-foreground = ${colors.white}
 enable-ipc = true
-
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
-
 cursor-click = pointer
 cursor-scroll = default
+
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
+
 
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
-;label-mode-padding = 2
-;label-mode-foreground = #000
-;label-mode-background = ${colors.mono0}
-
-
-
-; focused = Active workspace on focused monitor
 label-focused = %index%
 label-focused-background = ${colors.t_green}
 label-focused-foreground = ${colors.mono0}
 label-focused-padding = 1
-
-; unfocused = Inactive workspace on any monitor
 label-unfocused = %index%
 label-unfocused-background = ${colors.t_mono4}
 label-unfocused-foreground = ${colors.mono2}
 label-unfocused-padding = 1
-
-; visible = Active workspace on unfocused monitor
 label-visible = %index%
 label-visible-background = ${colors.t_mono4}
 label-visible-foreground = ${colors.mono2}
 label-visible-padding = 1
-
-; urgent = Workspace with urgency hint set
 label-urgent = %index%
 label-urgent-background = ${colors.t_red}
 label-urgent-foreground = ${colors.mono0}
 label-urgent-padding = 1
 
 
-; [module/eth]
-; type = internal/network
-; interface = eth1
-
-[module/wlan]
+[module/wired-network]
 type = internal/network
-interface = wlp60s0
+#interface = br0
+interface-type = wired
 interval = 3.0
-
-format-connected-prefix=" "
-format-disconnected-prefix=" "
+format-connected-prefix=" "
+format-disconnected-prefix=" "
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
+label-connected = %ifname::10:..%
+label-disconnected = down
+label-connected-foreground = ${colors.white}
+label-disconnected-foreground = ${colors.red}
 
+[module/wireless-network]
+type = internal/network
+#interface = wlp60s0
+interface-type = wireless
+interval = 3.0
+format-connected-prefix=" "
+format-disconnected-prefix=" "
+format-connected = <label-connected>
+format-disconnected = <label-disconnected>
 label-connected = %essid::10:..%
 label-disconnected = down
 label-connected-foreground = ${colors.white}
@@ -146,20 +119,20 @@ label-disconnected-foreground = ${colors.red}
 [module/date]
 type = internal/date
 interval = 1.0
-date = %b %d%
-time = %H:%M
-date-alt = %A, %d %B %Y
-time-alt = %H:%M:%S
+date = %A, %d %B %Y
+time = %H:%M:%S
 format = " <label>"
 format-foreground = ${colors.white}
 label = %date% %time%
 
+
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = 
+format-prefix = ""
 format-prefix-foreground=${colors.white}
 label = %percentage:2%%
+
 
 [module/memory]
 type = internal/memory
@@ -168,26 +141,22 @@ format-prefix = " "
 format-prefix-foreground=${colors.white}
 label = %percentage_used%%
 
+
 [module/battery]
 type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 98
-
 format-charging = <animation-charging> <label-charging>
-
 format-discharging = <ramp-capacity> <label-discharging>
-
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.white}
-
 ramp-capacity-foreground = ${colors.white}
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
-
 animation-charging-foreground = ${colors.yellow}
 animation-charging-0 = 
 animation-charging-1 = 
@@ -197,42 +166,45 @@ animation-charging-4 = 
 animation-charging-framerate = 2000
 
 
+[module/backlight]
+type = custom/ipc
+format = <output>
+initial = 1
+hook-0 = ~/dotfiles/bin/polybar-light initial
+hook-1 = ~/dotfiles/bin/polybar-light up 1
+hook-2 = ~/dotfiles/bin/polybar-light down 1
+scroll-up = "#backlight.hook.1"
+scroll-down = "#backlight.hook.2"
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+use-ui-max = true
+interval = 5
+format-volume = <ramp-volume><label-volume>
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
+label-muted = " muted"
+label-muted-foreground=${colors.white}
+click-right = pavucontrol
+
+
 [module/volume]
 type = internal/alsa
-
-format-volume = <bar-volume>
+format-volume = <label-volume>
 format-volume-prefix = " "
 format-volume-prefix-foreground=${colors.white}
 label-volume-foreground = ${colors.white}
-
 format-muted-prefix = " "
 format-muted-prefix-foreground=${colors.white}
 label-muted = muted
 
-bar-volume-width = 10
-bar-volume-gradient = false
-bar-volume-indicator = ━
-bar-volume-indicator-font = 2
-bar-volume-indicator-foreground = ${colors.mono0}
-bar-volume-fill = ━
-bar-volume-fill-font = 2
-bar-volume-fill-foreground = ${colors.white}
-bar-volume-empty = ━
-bar-volume-empty-font = 2
-bar-volume-empty-foreground = ${colors.mono0}
-
-[module/demo]
-type = custom/ipc
-hook-0 = echo foobar
-hook-1 = date +%s
-hook-2 = whoami
-initial = 1
-click-left = polybar-msg -p %pid% hook demo 1
-click-right = polybar-msg -p %pid% hook demo 2
-double-click-left = polybar-msg -p %pid% hook demo 3
 
 [settings]
 screenchange-reload = true
+pseudo-transparency = true
+
 
 [global/wm]
 margin-top = 5
