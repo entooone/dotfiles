@@ -6,10 +6,11 @@ set $left h
 set $down j
 set $up k
 set $right l
-set $term WINIT_UNIX_BACKEND=x11 GDK_BACKEND=x11 alacritty
+set $term wezterm
+set $term2 WINIT_UNIX_BACKEND=x11 GDK_BACKEND=x11 wezterm
 set $menu wofi --show drun -I -a
 # set $browser GDK_BACKEND=wayland firefox
-set $browser chromium
+set $browser firefox
 set $simplenote GDK_BACKEND=x11 simplenote
 set $ws1  "1"
 set $ws2  "2"
@@ -25,12 +26,15 @@ set $ws10 "10"
 
 # Output configuration
 #─────────────────────────────
-output eDP-1 pos     0,0 scale 1.5
+#output eDP-1 pos     0,0 scale 1.5
+output eDP-1 pos 0,0 mode 3000x2000 scale 1.25 scale_filter linear
 #output  DP-1 pos -3000,0
 output  DP-2
+#output DP-1 mode 3840x2160
+output "Dell Inc. DELL P2715Q 32R1F513646L" mode 3840x2160
 #pos  3000,0
-# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ~/Pictures/wallpaper5.jpg fill
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output * bg ~/Pictures/wallpaper5.jpg fill
 
 # Example configuration:
 #
@@ -94,9 +98,10 @@ input type:Mouse {
 # Basics:
 #
     bindsym $mod+Return exec $term
+    bindsym $mod+Shift+Return exec $term2
     bindsym $mod+Shift+q kill
-    bindsym $mod+Shift+d exec GDK_BACKEND=wayland $menu
-    bindsym $mod+d exec $menu
+    bindsym $mod+Shift+d exec $menu
+    bindsym $mod+d exec GDK_BACKEND=wayland $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -174,7 +179,7 @@ input type:Mouse {
     bindsym $mod+Shift+n move container to workspace next; workspace next
     bindsym $mod+Shift+p move container to workspace prev; workspace prev
 #
-# Layout stuff:
+# Layout stuff:212
 #
     bindsym $mod+s splith
     bindsym $mod+v splitv
@@ -225,11 +230,11 @@ bindsym $mod+r mode "resize"
 set $mode_system (l)ock, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
 set $swayexit ~/dotfiles/bin/swayexit
 mode "$mode_system" {
-    bindsym l exec $swayexit lock, mode "default"
-    bindsym s exec $swayexit suspend, mode "default"
-    bindsym h exec $swayexit hibernate, mode "default"
-    bindsym r exec $swayexit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id myi3exit shutdown, mode "default"
+    bindsym l       exec $swayexit lock, mode "default"
+    bindsym s       exec $swayexit suspend, mode "default"
+    bindsym h       exec $swayexit hibernate, mode "default"
+    bindsym r       exec $swayexit reboot, mode "default"
+    bindsym Shift+s exec $swayexit shutdown, mode "default"
 
     # Return to default mode
     bindsym Return mode "default"
@@ -311,7 +316,7 @@ exec_always {
 # Auto start
 #─────────────────────────────
 for_window [shell=".*"] title_format "%title :: %shell"
-exec fcitx-autostart
+exec fcitx5
 exec ~/.config/waybar/launch.sh
 exec gammastep-indicator -l 35:139
 exec dropbox
