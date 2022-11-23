@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# usage:
+# polybar-light initial
+# polybar-light up 5
+# polybar-light down 5
+
+if [[ "$1" == "initial" ]]; then
+    :
+elif [[ "$1" == "up" ]]; then
+    light -A "$2"
+elif [[ "$1" == "down" ]]; then
+    light -U "$2"
+fi
+
+BRIGHTNESS=$(light -G)
+
+VALUE=${BRIGHTNESS%.*}
+LABEL_LEVEL0="🌕"
+LABEL_LEVEL1="🌔"
+LABEL_LEVEL2="🌓"
+LABEL_LEVEL3="🌒"
+LABEL_LEVEL4="🌑"
+
+if [[ "${VALUE}" -lt 10 ]]; then
+    LABEL=${LABEL_LEVEL0}
+elif [[ "${VALUE}" -lt 30 ]]; then
+    LABEL=${LABEL_LEVEL1}
+elif [[ "${VALUE}" -lt 70 ]]; then
+    LABEL=${LABEL_LEVEL2}
+elif [[ "${VALUE}" -lt 100 ]]; then
+    LABEL=${LABEL_LEVEL3}
+elif [[ "${VALUE}" -eq 100 ]]; then
+    LABEL=${LABEL_LEVEL4}
+fi
+
+FORMAT="${LABEL} ${VALUE}"
+echo ${FORMAT}
