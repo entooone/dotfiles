@@ -11,6 +11,7 @@ set ignorecase
 set smartcase
 set autoindent
 set wildmenu
+set wildmode=list:longest
 set tabstop=4
 set shiftwidth=0
 set softtabstop=0
@@ -24,20 +25,19 @@ set fileencoding=utf-8
 set fileencodings=ucs-boms,utf-8,utf-16le,euc-jp,cp932,sjis
 set fileformats=unix,dos,mac
 set ambiwidth=single
-"set conceallevel=0
 set splitbelow
+set splitright
 set ruler
+"set rulerformat=%30(%t%m%=\ %3l\,%-3c\ %P%)
 set nonumber
-"set noshowcmd
-"set noshowmode
 set nowrap
-"set showtabline=2
 set guioptions-=e
 set laststatus=0
 if !has('gui_running')
     set t_Co=256
 endif
 set noswapfile
+set mouse=a
 
 "
 " Windows
@@ -45,6 +45,7 @@ set noswapfile
 if has('win32')
     set runtimepath^=~/.vim/
 endif
+
 
 " Cursor
 "─────────────────────────────
@@ -81,8 +82,8 @@ let g:Netrw_UserMaps = [
 call plug#begin('~/.vim/plugged')
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'lambdalisue/fern.vim'
 Plug 'fatih/molokai'
-Plug 'easymotion/vim-easymotion'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
@@ -110,6 +111,11 @@ endif
 " neosnippet
 "─────────────────────────────
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+
+
+" vimspector
+"─────────────────────────────
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
 
 
 " molokai
@@ -143,20 +149,14 @@ if isdirectory(expand('~/.vim/plugged/molokai'))
 endif
 
 
-" easymotion
-"─────────────────────────────
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-
-
-" asyncomplete
-"─────────────────────────────
-let g:asyncomplete_auto_popup = 0
-
-
 " vim-terraform
 "─────────────────────────────
 let g:terraform_fmt_on_save = 1
+
+
+" vim-lsp
+"─────────────────────────────
+let g:lsp_format_sync_timeout = 1000
 
 
 " ctrlp
@@ -170,6 +170,20 @@ let g:ctrlp_show_hidden = 1
 " keymap
 "─────────────────────────────
 let mapleader = "\<Space>"
+nmap gj gj<SID>g
+nmap gk gk<SID>g
+nnoremap <script> <SID>gj gj<SID>g
+nnoremap <script> <SID>gk gk<SID>g
+nmap <SID>g <Nop>
+nmap <C-w>+ <C-w>+<SID>ws
+nmap <C-w>- <C-w>-<SID>ws
+nmap <C-w>> <C-w>><SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nnoremap <script> <SID>ws+ <C-w>+<SID>ws
+nnoremap <script> <SID>ws- <C-w>-<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nmap <SID>ws <Nop>
 nnoremap          Q           :<C-u>q<CR>
 nnoremap          Y           y$
 nnoremap          <C-H>       gT
@@ -179,22 +193,18 @@ imap              <C-k>       <Plug>(neosnippet_expand_or_jump)
 xmap              <C-k>       <Plug>(neosnippet_expand_target)
 smap              <expr><TAB> neosnippet#expandable_or_jumpable() ?
 nnoremap <silent> <leader>s   :<C-u>NeoSnippetEdit -split -horizontal<CR>
-map               <leader>m   <Plug>(easymotion-bd-f)
-nmap              <leader>m   <Plug>(easymotion-overwin-f)
 nmap     <buffer> <leader>n   <plug>(lsp-references)
 nnoremap <silent> <leader>R   :<C-u>source ~/.vimrc<CR>
-nnoremap <silent> <leader>g   :<C-u>terminal ++close tig<CR>
+nnoremap <silent> <leader>g   :<C-u>vert terminal ++close tig<CR>
 nnoremap <silent> <leader>b   :<C-u>CtrlPBuffer<CR>
 nnoremap <silent> <leader>e   :<C-u>Texplore<CR>
-nnoremap <silent> <leader>t   :<C-u>terminal<CR>
+nnoremap <silent> <leader>t   :<C-u>vert terminal<CR>
+nnoremap <silent> <leader>T   :<C-u>terminal<CR>
 nnoremap <silent> <leader>h   :<C-u>LspHover<CR>
 nnoremap <silent> <leader>d   :<C-u>LspDefinition<CR>
 nnoremap <silent> <leader>p   :<C-u>LspDocumentDiagnostics<CR>
 nnoremap <silent> <leader>w   :<C-u>LspDocumentSymbol<CR>
 nnoremap <silent> <leader>r   :<C-u>LspReferences<CR>
-nnoremap          <leader>SS  :<C-u>SaveSession<CR>
-nnoremap <silent> <leader>SL  :<C-u>CtrlPLoadSession<CR>
-nnoremap <silent> <leader>SD  :<C-u>CtrlPDeleteSession<CR>
 cnoremap <C-A> <Home>
 cnoremap <C-F> <Right>
 cnoremap <C-B> <Left>
@@ -202,31 +212,63 @@ cnoremap <C-D> <Del>
 cnoremap <M-B> <S-Left>
 cnoremap <M-J> <S-Right>
 
-" automatic commands
+
+" auto save session
 "─────────────────────────────
-augroup TxtConf
+
+function! SaveSess()
+    if g:autosession_mode
+        call mkdir(expand('~/.vim/sessions') . g:autosession_dir, 'p')
+        execute 'mksession! ' expand('~/.vim/sessions') . g:autosession_dir . '/session.vim'
+    endif
+endfunction
+
+function! RestoreSess()
+    if isdirectory(expand('%'))
+        let g:autosession_mode = 1
+        let g:autosession_dir = expand('%:p:h')
+
+        if filereadable(expand('~/.vim/sessions') . expand('%:p:h') . '/session.vim')
+            execute 'silent so ' . expand('~/.vim/sessions') . expand('%:p:h') . '/session.vim'
+        endif
+    endif
+endfunction
+
+autocmd VimLeave * call SaveSess()
+autocmd VimEnter * nested call RestoreSess()
+
+
+
+" autocommand
+"─────────────────────────────
+augroup TXT_AG
     autocmd!
     autocmd BufNewFile,BufRead *.txt nnoremap j gj
     autocmd BufNewFile,BufRead *.txt nnoremap k gk
     autocmd BufNewFile,BufRead *.txt vnoremap j gj
     autocmd BufNewFile,BufRead *.txt vnoremap k gk
 augroup END
-augroup MdConf
+augroup MD_AG
     autocmd!
     autocmd BufNewFile,BufRead set noexpandtab
+    autocmd BufNewFile,BufRead *.md set wrap
     autocmd BufNewFile,BufRead *.md nnoremap j gj
     autocmd BufNewFile,BufRead *.md nnoremap k gk
     autocmd BufNewFile,BufRead *.md vnoremap j gj
     autocmd BufNewFile,BufRead *.md vnoremap k gk
 augroup END
-augroup TEXConf
+augroup TEX_AG
     autocmd!
-    autocmd BufWritePre *.tex :%s/、/，/ge
-    autocmd BufWritePre *.tex :%s/。/．/ge
+    autocmd BufWritePre *.tex call execute('%s/、/，/ge')
+    autocmd BufWritePre *.tex call execute('%s/。/．/ge')
+    autocmd BufWritePre *.tex call execute('LspDocumentFormatSync')
     autocmd BufNewFile,BufRead *.tex set wrap
-    autocmd BufNewFile,BufRead *.tex nnoremap j gj
-    autocmd BufNewFile,BufRead *.tex nnoremap k gk
-    autocmd BufNewFile,BufRead *.tex vnoremap j gj
-    autocmd BufNewFile,BufRead *.tex vnoremap k gk
-    "autocmd BufNewFile,BufRead *.tex inoremap ; \
+augroup END
+augroup XML_AG
+    autocmd!
+    autocmd BufNewFile,BufRead *.xml set ts=2 sw=2 sts=2 et
+augroup END
+augroup GO_AG
+    autocmd!
+    autocmd BufNewFile,BufRead *.go set ts=4 sw=0 sts=0 noet
 augroup END
