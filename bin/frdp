@@ -1,6 +1,20 @@
 #!/bin/bash
+set -e
 
 RDP_PATH="$HOME/rdp"
 TARGET_FILE=$(for f in $(find ${RDP_PATH} -type f); do basename $f; done | fzf --preview="cat ${RDP_PATH}/{}")
 
-start ${RDP_PATH}/${TARGET_FILE}
+if [ -z "${TARGET_FILE}" ]; then
+    exit 0
+fi
+
+if [[ "${OSTYPE}" == "linux-gnu"* ]]; then
+    read -p "PASSWORD: " -s PASS
+    nohup xfreerdp "${RDP_PATH}/${TARGET_FILE}" /kbd:0x00000411 /p:"${PASS}" -grab-keyboard /clipboard &> /dev/null &
+    unset PASS
+    echo ""
+elif [[ "${OSTYPE}" == "msys" ]]; then
+    start "${RDP_PATH}/${TARGET_FILE}"
+else
+    echo "Unsupported OSTYPE (got: ${OSTYPE})"
+fi
