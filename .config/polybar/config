@@ -121,6 +121,7 @@ type = internal/date
 interval = 1.0
 date = %A, %d %B %Y
 time = %H:%M:%S
+date-alt = %Y/%m/%d
 format = " <label>"
 format-foreground = ${colors.white}
 label = %date% %time%
