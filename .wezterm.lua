@@ -42,25 +42,21 @@ local config = {
     scrollback_lines = 100000,
     canonicalize_pasted_newlines = "None",
     debug_key_events = true,
-}
-
-local default_prog;
-local launch_menu;
+    audible_bell = "Disabled",
+};
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-    local run_bash = {"cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l"}
-    default_prog = run_bash;
-    launch_menu = {
-        { label = "Bash",       args = run_bash, },
-        { label = "CMD",        args = { "cmd.exe" }, },
-        { label = "PowerShell", args = { "powershell.exe" }, },
+    local run_bash = { "cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l" };
+    config.launch_menu = {
+        { label="Bash",       args=run_bash, },
+        { label="CMD",        args={ "cmd.exe" }, },
+        { label="PowerShell", args={ "powershell.exe" }, },
     };
-    config.launch_menu = launch_menu;
-    config.default_prog = default_prog;
+    config.default_prog = run_bash;
     config.mouse_bindings = {
-        { event={Up={streak=1, button="Left"}}, mods="NONE", action=wezterm.action{ExtendSelectionToMouseCursor="Cell"} },
-        { event={Up={streak=2, button="Left"}}, mods="NONE", action="Nop", },
-        { event={Up={streak=1, button="Left"}}, mods="CTRL", action="OpenLinkAtMouseCursor", },
+        { event={ Up={ streak=1, button="Left" } }, mods="NONE", action=wezterm.action{ExtendSelectionToMouseCursor="Cell"} },
+        { event={ Up={ streak=2, button="Left" } }, mods="NONE", action="Nop", },
+        { event={ Up={ streak=1, button="Left" } }, mods="CTRL", action="OpenLinkAtMouseCursor", },
     };
     config.keys = {
         { key="\"", mods="CTRL|SHIFT|ALT", action=wezterm.action{ SplitVertical={ domain="CurrentPaneDomain" } } },
@@ -78,7 +74,7 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
         { key="'",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(6) }, 
         { key="(",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(7) }, 
         { key=")",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(8) }, 
-    }
+    };
 end
 
 return config
