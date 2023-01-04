@@ -156,7 +156,8 @@ let g:terraform_fmt_on_save = 1
 
 " vim-lsp
 "─────────────────────────────
-let g:lsp_format_sync_timeout = 1000
+" let g:lsp_format_sync_timeout = 1000
+let g:lsp_document_highlight_enabled = 0
 
 
 " ctrlp
@@ -189,8 +190,8 @@ nnoremap          Y           y$
 nnoremap          <C-H>       gT
 nnoremap          <C-L>       gt
 imap              <C-L>       <Plug>(asyncomplete_force_refresh)
-imap              <C-k>       <Plug>(neosnippet_expand_or_jump)
-xmap              <C-k>       <Plug>(neosnippet_expand_target)
+imap              <C-s>       <Plug>(neosnippet_expand_or_jump)
+xmap              <C-s>       <Plug>(neosnippet_expand_target)
 smap              <expr><TAB> neosnippet#expandable_or_jumpable() ?
 nnoremap <silent> <leader>s   :<C-u>NeoSnippetEdit -split -horizontal<CR>
 nmap     <buffer> <leader>n   <plug>(lsp-references)
@@ -252,10 +253,10 @@ augroup MD_AG
     autocmd!
     autocmd BufNewFile,BufRead set noexpandtab
     autocmd BufNewFile,BufRead *.md set wrap
-    autocmd BufNewFile,BufRead *.md nnoremap j gj
-    autocmd BufNewFile,BufRead *.md nnoremap k gk
-    autocmd BufNewFile,BufRead *.md vnoremap j gj
-    autocmd BufNewFile,BufRead *.md vnoremap k gk
+    "autocmd BufNewFile,BufRead *.md nnoremap j gj
+    "autocmd BufNewFile,BufRead *.md nnoremap k gk
+    "autocmd BufNewFile,BufRead *.md vnoremap j gj
+    "autocmd BufNewFile,BufRead *.md vnoremap k gk
 augroup END
 augroup TEX_AG
     autocmd!
