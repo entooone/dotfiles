@@ -233,3 +233,15 @@ options     head
         }
         return left
     }
+
+snippet     ifnoerr
+abbr        ifnoerr
+options     head
+    if err == nil { // if NO error
+        ${0:TARGET}
+	}
+
+snippet pe
+abbr    pe
+options head
+    panic(err)
