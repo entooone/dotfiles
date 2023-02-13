@@ -10,7 +10,6 @@ for f in ${DOTFILES}/profile.d/*.sh; do
     source $f
 done
 
-
 # local bashrc
 #─────────────────────────────
 LOCAL_BASHRC="${DOTFILES}/.bash/bashrc.local"
@@ -58,10 +57,10 @@ stty stop undef # unbind C-s
 #bind -x '"\206":"cd -f"'
 #bind '"\C-s": "\200\C-a\C-k\206\C-m\201"'
 
-# wezterm
+# completion
 #─────────────────────────────
 source <(wezterm shell-completion --shell bash)
-
+source <(aqua completion bash)
 
 # load message
 #─────────────────────────────
