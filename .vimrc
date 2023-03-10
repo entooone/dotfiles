@@ -79,9 +79,10 @@ let g:Netrw_UserMaps = [
 
 " Plugin
 "─────────────────────────────
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
+Plug 'tomtom/tcomment_vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'fatih/molokai'
 Plug 'prabirshrestha/asyncomplete.vim'
@@ -98,6 +99,7 @@ Plug 'mattn/vim-maketable'
 Plug 'koron/codic-vim'
 Plug 'ziglang/zig.vim'
 Plug 'puremourning/vimspector'
+Plug 'AndrewRadev/linediff.vim'
 call plug#end()
 
 
