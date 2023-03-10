@@ -198,6 +198,7 @@ nmap     <buffer> <leader>n   <plug>(lsp-references)
 nnoremap <silent> <leader>R   :<C-u>source ~/.vimrc<CR>
 nnoremap <silent> <leader>g   :<C-u>vert terminal ++close tig<CR>
 nnoremap <silent> <leader>b   :<C-u>CtrlPBuffer<CR>
+nnoremap          <leader>c   :<C-u>ClearAllCtrlPCaches<CR>
 nnoremap <silent> <leader>e   :<C-u>Texplore<CR>
 nnoremap <silent> <leader>t   :<C-u>vert terminal<CR>
 nnoremap <silent> <leader>T   :<C-u>terminal<CR>
