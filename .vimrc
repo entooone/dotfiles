@@ -39,7 +39,7 @@ endif
 set noswapfile
 set mouse=a
 
-"
+
 " Windows
 "─────────────────────────────
 if has('win32')
@@ -219,7 +219,6 @@ cnoremap <M-J> <S-Right>
 
 " auto save session
 "─────────────────────────────
-
 function! SaveSess()
     if g:autosession_mode
         call mkdir(expand('~/.vim/sessions') . g:autosession_dir, 'p')
@@ -242,24 +241,12 @@ autocmd VimLeave * call SaveSess()
 autocmd VimEnter * nested call RestoreSess()
 
 
-
 " autocommand
 "─────────────────────────────
-augroup TXT_AG
-    autocmd!
-    autocmd BufNewFile,BufRead *.txt nnoremap j gj
-    autocmd BufNewFile,BufRead *.txt nnoremap k gk
-    autocmd BufNewFile,BufRead *.txt vnoremap j gj
-    autocmd BufNewFile,BufRead *.txt vnoremap k gk
-augroup END
 augroup MD_AG
     autocmd!
-    autocmd BufNewFile,BufRead set noexpandtab
+    autocmd BufNewFile,BufRead *.md set noexpandtab
     autocmd BufNewFile,BufRead *.md set wrap
-    "autocmd BufNewFile,BufRead *.md nnoremap j gj
-    "autocmd BufNewFile,BufRead *.md nnoremap k gk
-    "autocmd BufNewFile,BufRead *.md vnoremap j gj
-    "autocmd BufNewFile,BufRead *.md vnoremap k gk
 augroup END
 augroup TEX_AG
     autocmd!
