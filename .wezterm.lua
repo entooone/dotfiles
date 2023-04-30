@@ -1,4 +1,4 @@
-local wezterm = require 'wezterm';
+local wezterm = require 'wezterm'
 
 local config = {
     colors = {
@@ -43,26 +43,26 @@ local config = {
     canonicalize_pasted_newlines = "None",
     debug_key_events = true,
     audible_bell = "Disabled",
-};
+}
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
-    local run_bash = { "cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l" };
+    local run_bash = { "cmd.exe", "/c", "%UserProfile%\\scoop\\apps\\git-with-openssh\\current\\bin\\bash.exe", "-i", "-l" }
     config.launch_menu = {
         { label="Bash",       args=run_bash, },
         { label="CMD",        args={ "cmd.exe" }, },
         { label="PowerShell", args={ "powershell.exe" }, },
-    };
+    }
     config.default_prog = run_bash;
     config.mouse_bindings = {
         { event={ Up={ streak=1, button="Left" } }, mods="NONE", action=wezterm.action{ExtendSelectionToMouseCursor="Cell"} },
         { event={ Up={ streak=2, button="Left" } }, mods="NONE", action="Nop", },
         { event={ Up={ streak=1, button="Left" } }, mods="CTRL", action="OpenLinkAtMouseCursor", },
-    };
+    }
     config.keys = {
         { key="\"", mods="CTRL|SHIFT|ALT", action=wezterm.action{ SplitVertical={ domain="CurrentPaneDomain" } } },
         { key="h",  mods="CTRL",           action=wezterm.action{ SendKey={ key="Backspace", } } },
         { key="w",  mods="SHIFT|ALT",      action=wezterm.action.ShowTabNavigator, },
-    };
+    }
 elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
     config.keys = {
         { key="!",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(0) },
@@ -74,7 +74,7 @@ elseif wezterm.target_triple == "x86_64-unknown-linux-gnu" then
         { key="'",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(6) }, 
         { key="(",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(7) }, 
         { key=")",  mods="CTRL|SHIFT", action=wezterm.action.ActivateTab(8) }, 
-    };
+    }
 end
 
 return config
