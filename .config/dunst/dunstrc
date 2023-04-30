@@ -1,0 +1,26 @@
+[global]
+  font = Cica 11
+  origin = bottom-right
+  frame_width = 1
+  markup = full
+  format = "<b>%s</b>\n%b"
+  alignment = center
+  vertical_alignment = center
+
+[urgency_low]
+  frame_color = "#80ccc9"
+  foreground = "#80fff9"
+  background = "#2b2c2b"
+  timeout = 4
+
+[urgency_normal]
+  frame_color = "#98c379"
+  foreground = "#98c379"
+  background = "#2b2c2b"
+  timeout = 6
+
+[urgency_critical]
+  frame_color = "#e06c75"
+  foreground = "#e06c75"
+  background = "#2b2c2b"
+  timeout = 8
