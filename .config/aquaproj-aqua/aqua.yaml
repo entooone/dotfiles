@@ -27,3 +27,4 @@ packages:
 - name: hashicorp/terraform@v1.4.2
 - name: TomWright/dasel@v2.1.1
 - name: cli/cli@v2.24.3
+- name: rclone/rclone@v1.62.2
