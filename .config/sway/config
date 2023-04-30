@@ -33,8 +33,8 @@ output  DP-2
 #output DP-1 mode 3840x2160
 output "Dell Inc. DELL P2715Q 32R1F513646L" mode 3840x2160
 #pos  3000,0
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-# output * bg ~/Pictures/wallpaper5.jpg fill
+#output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/Pictures/wallpaper.jpg fill
 
 # Example configuration:
 #
