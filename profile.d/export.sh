@@ -10,21 +10,9 @@ export PATH=$PATH:$HOME/dotfiles/bin
 export FZF_DEFAULT_COMMAND='find . | grep -v -E ".git"'
 export FZF_DEFAULT_OPTS='--reverse --height 40%'
 
-# deno
-#─────────────────────────────
-export PATH="/home/u5er/.deno/bin:$PATH"
-
-
-# golang
-#─────────────────────────────
-if type "go" > /dev/null 2>&1; then
-    export PATH=$PATH:$(go env GOPATH)/bin
-fi
-
-if type "cargo" > /dev/null 2>&1; then
-    export PATH=$PATH:$HOME/.cargo/bin
-fi
-
+export PATH=$PATH:$HOME/.deno/bin
+export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/.cargo/bin
 
 # java
 #─────────────────────────────
