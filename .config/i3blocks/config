@@ -1,3 +1,9 @@
+[window_title]
+label=
+command=~/.config/i3blocks/script/get_window_title.sh
+color=#ffffff
+interval=1
+
 [audio]
 label=
 command=~/.config/i3blocks/script/audio.sh
