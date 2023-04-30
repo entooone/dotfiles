@@ -12,7 +12,7 @@ set smartcase
 set autoindent
 set wildmenu
 set wildmode=list:longest
-set tabstop=4
+set tabstop=2
 set shiftwidth=0
 set softtabstop=0
 set expandtab
@@ -100,6 +100,7 @@ Plug 'koron/codic-vim'
 Plug 'ziglang/zig.vim'
 Plug 'puremourning/vimspector'
 Plug 'AndrewRadev/linediff.vim'
+Plug 'github/copilot.vim'
 call plug#end()
 
 
@@ -168,6 +169,18 @@ let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_cmd = 'CtrlP .'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|node_modules|venv)$',
+  \ 'file': '\v\.(exe|so|dll|zip|pdf)$',
+  \ }
+
+
+" GitHub Copilot
+"─────────────────────────────
+let g:copilot_filetypes = {
+      \ '*': v:false,
+      \ 'go': v:true,
+      \ }
 
 
 " keymap
