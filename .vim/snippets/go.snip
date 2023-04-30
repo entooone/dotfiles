@@ -245,3 +245,19 @@ snippet pe
 abbr    pe
 options head
     panic(err)
+
+snippet buntb
+abbr    bun:
+    \`bun:"table:${1:VALUE},alias:${2:ALIAS}"\`
+
+snippet bunai
+abbr    bun:
+    \`bun:"${1:VALUE},autoincrement"\`
+
+snippet bunnn
+abbr    bun:
+    \`bun:"${1:VALUE},notnull"\`
+
+snippet bunnz
+abbr    bun:
+    \`bun:"${1:VALUE},nullzero"\`
