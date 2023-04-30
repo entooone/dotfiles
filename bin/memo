@@ -1,35 +1,81 @@
 #!/bin/bash
+# memo.sh - 簡単なメモ管理ツール
 
-MEMODIR=$HOME/.memo
+set -e
 
-if [ ! -e ${MEMODIR} ]; then
-    mkdir ${MEMODIR}
-fi
+MEMODIR="${MEMODIR:-$HOME/.memo}"
+MEMOFILENAME=memo_$(date "+%Y%m%d").md
 
-if [ "$1" = "c" ]; then
-  (cd ${MEMODIR}; cat `ls -1 .`)
-elif [ "$1" = "l" ]; then
-  ls -1 ${MEMODIR}
-elif [ "$1" = "t" ]; then
-  for f in ${MEMODIR}/*; do
-    result=$(egrep -nir "^ *todo" $f)
-    if [ $? -eq 0 ]; then
-      echo "*** ${f#${MEMODIR}/} ***"
-      echo "$result" | perl -pe 's/^([0-9]+): *todo *:? */   L\1: /ig'
-    fi  
-  done
-elif [ $# -eq 1 ]; then
-  vim + ${MEMODIR}/*$1*
-elif [ $# -eq 2 ]; then
-  vim +$2 ${MEMODIR}/*$1*
-else
-  filename=memo_$(date "+%Y%m%d").md
-  filepath=${MEMODIR}/$filename
-  
-  if [ -e $filepath ]; then
-    echo "" >> $filepath
+error() {
+  echo "$@" >&2
+}
+
+usage() {
+  echo "usage: $0 [options]"
+  echo "  -h"
+  echo "      このメッセージを表示"
+  echo "  -t"
+  echo "      メモの一覧表示"
+  echo "  -f"
+  echo "      メモの検索"
+}
+
+edit_today_memo() {
+  local filepath
+  local filename=memo_$(date "+%Y%m%d").md
+  filepath=${MEMODIR}/${filename}
+
+  if [ -e ${filepath} ]; then
+    echo "" >> ${filepath}
   fi  
-  echo -e "## $(date '+%Y%m%d %H:%M:%S')\n\n" >> $filepath
+  echo -e "## $(date '+%Y%m%d %H:%M:%S')\n\n" >> ${filepath}
+
+  cd ${MEMODIR}
+  vim + ${filepath}
+}
+
+edit_searched_memo() {
+  local filepath
+
+  cd ${MEMODIR}
+  filepath=$(ls -r | fzf --preview='cat {}')
+  vim ${filepath}
+}
+
+main() {
+  if [ ! -e ${MEMODIR} ]; then
+      mkdir ${MEMODIR}
+  fi
+
+  if [ $# -eq 0 ]; then
+    edit_today_memo
+    exit 0
+  fi
   
-  (cd ${MEMODIR} && vim + $filepath)
-fi
+  while getopts ":htf" opt; do
+    case ${opt} in
+      h)
+        usage
+        exit 0
+        ;;
+      t)
+        ls -1 ${MEMODIR}
+        exit 0
+        ;;
+      f)
+        edit_searched_memo
+        exit 0
+        ;;
+      \?)
+        error "invalid option: '$1'"
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  usage
+  exit 1
+}
+
+main $@
