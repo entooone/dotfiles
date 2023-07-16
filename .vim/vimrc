@@ -180,6 +180,7 @@ let g:ctrlp_custom_ignore = {
 let g:copilot_filetypes = {
       \ '*': v:false,
       \ 'go': v:true,
+      \ 'c': v:true,
       \ }
 
 
