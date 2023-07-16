@@ -1,3 +1,4 @@
+source /etc/bashrc
 
 # dotfiles
 #─────────────────────────────
@@ -36,8 +37,15 @@ __git_complete g __git_main
 
 # Prompt
 #─────────────────────────────
-#export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\h \[\033[33m\]\w \[\033[34m\]\`__git_ps1 %s\`\[\033[0m\]\n$ "
-export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\h \[\033[33m\]\w \[\033[34m\]\[\033[0m\]\n$ "
+__git_branch_name() {
+  if type git > /dev/null 2>&1 && git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    GIT_BRANCH_NAME="($(git rev-parse --abbrev-ref HEAD 2>/dev/null)) "
+  else
+    GIT_BRANCH_NAME=""
+  fi
+  printf "${GIT_BRANCH_NAME}"
+}
+export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\h \[\033[33m\]\`__git_branch_name\`\w \[\033[34m\]\[\033[0m\]\n$ "
 
 
 # Exports
@@ -47,21 +55,23 @@ export HISTFILE=$HOME/.bash_history
 
 # cd
 #─────────────────────────────
-source <(go-cd init)
+if type go-cd > /dev/null 2>&1; then
+  source <(go-cd init)
+fi
 
 # key binding
 #─────────────────────────────
 stty stop undef # unbind C-s
-#bind -x '"\200": TEMP_LINE=$READLINE_LINE; TEMP_POINT=$READLINE_POINT'
-#bind -x '"\201": READLINE_LINE=$TEMP_LINE; READLINE_POINT=$TEMP_POINT; unset TEMP_POINT; unset TEMP_LINE'
-#bind -x '"\206":"cd -f"'
-#bind '"\C-s": "\200\C-a\C-k\206\C-m\201"'
 
 # completion
 #─────────────────────────────
-source <(wezterm shell-completion --shell bash)
-source <(aqua completion bash)
+if type wezterm > /dev/null 2>&1; then
+  source <(wezterm shell-completion --shell bash)
+fi
+if type aqua > /dev/null 2>&1; then
+  source <(aqua completion bash)
+fi
 
 # load message
 #─────────────────────────────
-echo '~/.bashrc loaded'
+echo '~/.bashrc loaded' >&2
