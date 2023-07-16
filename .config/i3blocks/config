@@ -34,6 +34,12 @@ command=~/.config/i3blocks/script/wireless.sh
 color=#ffffff
 interval=10
 
+[dnf_updates]
+label=
+command=~/.config/i3blocks/script/dnf_updates.sh
+color=#ffffff
+interval=600
+
 [date]
 label= 
 command=date +'%A, %d %B %Y %H:%M:%S'
