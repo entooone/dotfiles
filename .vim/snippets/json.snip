@@ -1,0 +1,17 @@
+snippet     launch:go
+abbr        launch:go
+options     head
+    {
+      "configurations": {
+        "run": {
+          "adapter": "delve",
+          "filetypes": [ "go" ], 
+          "variables": {},
+          "configuration": {
+            "request": "launch",
+            "program": "${workspaceRoot}",
+            "mode": "debug"
+          }
+        }
+      }
+    }

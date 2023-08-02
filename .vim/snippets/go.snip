@@ -7,17 +7,17 @@ abbr    main
 options head
     package main
 
-    import "log"
+    import "os"
 
-    func run() error {
+    func run(args []string) error {
         ${0:TARGET}
 
         return nil
     }
 
     func main() {
-        if err := run(); err != nil {
-            log.Fatal(err)
+        if err := run(os.Args); err != nil {
+            panic(err)
         }
     }
 
