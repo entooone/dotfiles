@@ -51,7 +51,7 @@ __ps1_hostname() {
   if [ -n "${WSL_DISTRO_NAME}" ]; then
     printf "[WSL]${WSL_DISTRO_NAME}"
   else
-    printf "\h"
+    printf "$(hostname)"
   fi
 }
 export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\`__ps1_hostname\` \[\033[33m\]\`__git_branch_name\`\w \[\033[34m\]\[\033[0m\]\n$ "
