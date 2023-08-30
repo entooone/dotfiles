@@ -1,4 +1,6 @@
-source /etc/bashrc
+if [ -e /etc/bashrc ]; then
+    source /etc/bashrc
+fi
 
 # dotfiles
 #─────────────────────────────
@@ -70,6 +72,9 @@ if type wezterm > /dev/null 2>&1; then
 fi
 if type aqua > /dev/null 2>&1; then
   source <(aqua completion bash)
+fi
+if [ -e "${HOME}/.rye/env" ]; then
+  source "${HOME}/.rye/env"
 fi
 
 # load message
