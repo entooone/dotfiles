@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Prompt
+#─────────────────────────────
+export PS1="\n\[\033[35m\]\t \[\033[32m\]\u@\h\[\033[33m\]\`__git_ps1\` \w \[\033[34m\]\[\033[0m\]\n$ "
+
+# completion
+#─────────────────────────────
+BASH_COMPLETION="${HOME}/ghq/github.com/scop/bash-completion/bash_completion"
+if [ -e ${BASH_COMPLETION} ]; then
+    source ${BASH_COMPLETION}
+fi
+__git_complete g __git_main
+
+# alias
+#─────────────────────────────
+alias ls='ls -F --color=auto --ignore={ntuser.dat*,NTUSER.DAT*,ntuser.ini}'
