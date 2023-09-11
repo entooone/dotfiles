@@ -1,4 +1,4 @@
-if [ -e /etc/bashrc ]; then
+if [[ -e /etc/bashrc ]]; then
   source /etc/bashrc
 fi
 
@@ -31,19 +31,19 @@ fi
 if type wezterm > /dev/null 2>&1; then
   source <(wezterm shell-completion --shell bash)
 fi
-if [ -e "${HOME}/.rye/env" ]; then
+if [[ -e "${HOME}/.rye/env" ]]; then
   source "${HOME}/.rye/env"
 fi
 
 # local bashrc
 #─────────────────────────────
-if [ -n ${MSYSTEM} ]; then
+if [[ -n "${MSYSTEM}" ]]; then
   source ${DOTFILES}/.bash/bashrc_msys
 else
   source ${DOTFILES}/.bash/bashrc_linux
 fi
 export LOCAL_BASHRC="${DOTFILES}/.bash/bashrc.local"
-if [ -e "${LOCAL_BASHRC}" ]; then
+if [[ -e "${LOCAL_BASHRC}" ]]; then
   source ${LOCAL_BASHRC}
 fi
 
